@@ -15,13 +15,21 @@
                      'address_list'=>'收货地址管理',
                      'comment'=>'订单评价',       
             	    )
-               ),             		
-              'admin/index'=>array(
+               ),
+			'admin/index'=>array(
                 'name' =>'系统管理',
                 'action'=>array(
-                     'index'=>'欢迎页面',                     
-         	       )
-               ),
+                     'index'=>'欢迎页面',
+         	    	)
+				),
+			'admin/tc'=>array(
+				'name' =>'套餐系统',
+				'action'=>array(
+					'tcGoodsCategory'=>'套餐商品分类',
+                    'addEditGoodsCategory'=>'套餐商品分类编辑',
+
+					)
+				),
               'admin/system'=>array(
                 'name' =>'系统设置',
                 'action'=>array(

@@ -129,8 +129,8 @@ class Goods extends Base {
                             'data'  => '',
                         );
                         $this->ajaxReturn($return_arr);                        
-                    }   
-                   
+                    }
+
                     if ($type == 2)
                     {
                         $GoodsCategory->isUpdate(true)->save(); // 写入数据到数据库
