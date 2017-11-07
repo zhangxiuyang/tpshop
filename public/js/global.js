@@ -266,6 +266,7 @@ function get_category(id,next,select_id){
     });
 }
 
+
 // 读取 cookie
 function getCookie(c_name)
 {
