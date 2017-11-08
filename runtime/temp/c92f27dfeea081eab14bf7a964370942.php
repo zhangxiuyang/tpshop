@@ -1,4 +1,4 @@
-<?php if (!defined('THINK_PATH')) exit(); /*a:3:{s:46:"./application/admin/view3/tc\_tc_category.html";i:1509957632;s:48:"./application/admin/view3/public\min-header.html";i:1509601837;s:48:"./application/admin/view3/public\breadcrumb.html";i:1509608949;}*/ ?>
+<?php if (!defined('THINK_PATH')) exit(); /*a:3:{s:46:"./application/admin/view3/tc\_tc_category.html";i:1510106442;s:48:"./application/admin/view3/public\min-header.html";i:1509601837;s:48:"./application/admin/view3/public\breadcrumb.html";i:1509608949;}*/ ?>
 <!DOCTYPE html>
 <html>
   <head>
@@ -120,7 +120,7 @@
                 <div class="col-sm-12">
                     <div class="box">
                         <div class="box-header">
-                            <h3 class="box-title">增加分类</h3>
+                            <h3 class="box-title">编辑分类</h3>
 			                <div class="pull-right">
 			                	<a href="javascript:history.go(-1)" data-toggle="tooltip" title="" class="btn btn-default" data-original-title="返回"><i class="fa fa-reply"></i></a>
 
@@ -204,7 +204,7 @@ function get_tc_category(id,next,select_id){
         success: function(v) {
             v = "<option value='0'>请选择商品分类</option>" + v;
             $('#'+next).empty().html(v);
-            alert(v);
+            //alert(v);
             (select_id > 0) && $('#'+next).val(select_id);//默认选中
         }
     });

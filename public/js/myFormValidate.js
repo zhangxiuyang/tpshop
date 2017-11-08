@@ -121,7 +121,54 @@ function post_form(form_id,subbmit_url){
         }
     })
 }
+/**
+ *  Ajax通用提交表单 2
+ *  @var  form表单的id属性值  form_id
+ *  @var  提交地址 subbmit_url
+ */
+function post_form_2(form_id,subbmit_url) {
+    if(form_id == ''){
+        alert('缺少必要参数');
+        return false;
+    }
+    if(!subbmit_url){
+        //  默认取当前地址  加上ajax请求标示
+        subbmit_url = location.href + '/is_ajax/1';
+    }
+    //  序列化表单值
+    var data = $('#'+form_id).serialize();
 
+    $.post(subbmit_url,data,function(result){
+        var obj = $.parseJSON(result);
+        if(obj.status == 0){
+            var re = '';
+            for(var key in obj.result){
+                re +=obj.result[key]+"<br/>";
+            }
+            layer.msg(re, {
+                time: 10000, //20s后自动关闭
+                btn: ['确定']
+            });
+
+            return false;
+        }
+        if(obj.status == 1){
+            //alert(obj.msg);
+            layer.msg(obj.msg, {
+                icon: 1,   // 成功图标
+                time: 2000 //2秒关闭（如果不配置，默认是3秒）
+            });
+            if(obj.result.return_url){
+                //  返回跳转链接
+                location.href = obj.result.return_url;
+            }else{
+                //  刷新页面
+                location.reload();
+            }
+            return;
+        }
+    });
+}
 
 /**
  *  伪静态HTML处理

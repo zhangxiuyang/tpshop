@@ -40,11 +40,12 @@
 	</div>
 </div>
 
-<script src="/public/plugins/uploadify/jquery.min.js" type="text/javascript"></script> 
+<script src="/public/plugins/uploadify/jquery-1.8.2.min.js" type="text/javascript"></script>
 <!--防止客户端缓存文件，造成uploadify.js不更新，而引起的“喔唷，崩溃啦”-->
 <script>document.write("<script type='text/javascript' "+ "src='/public/plugins/uploadify/jquery.uploadify.js?" + new Date()+ "'></s" + "cript>");
-</script>			
-<script src="/public/plugins/uploadify/uploadify-move.js" type="text/javascript"></script> 
+</script>
+<script src="/public/plugins/uploadify/jquery.uploadify.js" type="text/javascript"></script>
+
 <script type="text/javascript">
 function Close(){
 	$("iframe.uploadframe", window.parent.document).remove();

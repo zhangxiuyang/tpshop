@@ -228,6 +228,7 @@ function getAllMenu(){
             array('name'=>'套餐商品','act'=>'tcGoodsList','control'=>'Tc'),
             array('name'=>'套餐商品分类','act'=>'tcGoodsCategory','control'=>'Tc'),
             array('name'=>'套餐商品相册','act'=>'tcGoodsPics','control'=>'Tc'),
+            array('name' => '品牌列表', 'act'=>'brandList', 'control'=>'Tc'),
             array('name'=>'套餐列表','act'=>'TcList','control'=>'Tc'),
         )),
         'member' => array('name'=>'会员管理','icon'=>'fa-user','sub_menu'=>array(
