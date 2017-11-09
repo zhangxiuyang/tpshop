@@ -1,0 +1,226 @@
+<?php if (!defined('THINK_PATH')) exit(); /*a:3:{s:45:"./application/admin/view3/tc\tcGoodsList.html";i:1510204394;s:48:"./application/admin/view3/public\min-header.html";i:1510128324;s:48:"./application/admin/view3/public\breadcrumb.html";i:1509608949;}*/ ?>
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>管理后台</title>
+    <!-- Tell the browser to be responsive to screen width -->
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+    <!-- Bootstrap 3.3.4 -->
+    <link href="__PUBLIC__/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+    <!-- FontAwesome 4.3.0 -->
+ 	<link href="__PUBLIC__/bootstrap/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+    <!-- Ionicons 2.0.0 --
+    <link href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css" rel="stylesheet" type="text/css" />
+    <!-- Theme style -->
+    <link href="__PUBLIC__/dist/css/AdminLTE.min.css" rel="stylesheet" type="text/css" />
+    <!-- AdminLTE Skins. Choose a skin from the css/skins 
+    	folder instead of downloading all of them to reduce the load. -->
+    <link href="__PUBLIC__/dist/css/skins/_all-skins.min.css" rel="stylesheet" type="text/css" />
+    <!-- iCheck -->
+    <link href="__PUBLIC__/plugins/iCheck/flat/blue.css" rel="stylesheet" type="text/css" />   
+    <!-- jQuery 2.1.4 -->
+    <script src="__PUBLIC__/plugins/jQuery/jQuery-2.1.4.min.js"></script>
+	<script src="__PUBLIC__/js/global.js"></script>
+    <script src="__PUBLIC__/js/myFormValidate.js"></script>    
+    <script src="__PUBLIC__/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
+    <script src="__PUBLIC__/js/layer/layer.js"></script><!-- 弹窗js 参考文档 http://layer.layui.com/-->
+    <script src="__PUBLIC__/js/myAjax.js"></script>
+    <script type="text/javascript">
+    function delfunc(obj){
+    	layer.confirm('确认删除？', {
+    		  btn: ['确定','取消'] //按钮
+    		}, function(){
+   				$.ajax({
+   					type : 'post',
+   					url : $(obj).attr('data-url'),
+   					data : {act:'del',del_id:$(obj).attr('data-id')},
+   					dataType : 'json',
+   					success : function(data){
+						layer.closeAll();
+   						if(data==1){
+   							layer.msg('操作成功', {icon: 1});
+   							$(obj).parent().parent().remove();
+   						}else{
+   							layer.msg(data, {icon: 2,time: 2000});
+   						}
+   						layer.closeAll();
+   					}
+   				})
+    		}, function(index){
+    			layer.close(index);
+    			return false;// 取消
+    		}
+    	);
+    }
+    
+    //全选
+    function selectAll(name,obj){
+    	$('input[name*='+name+']').prop('checked', $(obj).checked);
+    }   
+    
+    function get_help(obj){
+        layer.open({
+            type: 2,
+            title: '帮助手册',
+            shadeClose: true,
+            shade: 0.3,
+            area: ['90%', '90%'],
+            content: $(obj).attr('data-url'), 
+        });
+    }
+    
+    function delAll(obj,name){
+    	var a = [];
+    	$('input[name*='+name+']').each(function(i,o){
+    		if($(o).is(':checked')){
+    			a.push($(o).val());
+    		}
+    	})
+    	if(a.length == 0){
+    		layer.alert('请选择删除项', {icon: 2});
+    		return;
+    	}
+    	layer.confirm('确认删除？', {btn: ['确定','取消'] }, function(){
+    			$.ajax({
+    				type : 'get',
+    				url : $(obj).attr('data-url'),
+    				data : {act:'del',del_id:a},
+    				dataType : 'json',
+    				success : function(data){
+						layer.closeAll();
+    					if(data == 1){
+    						layer.msg('操作成功', {icon: 1});
+    						$('input[name*='+name+']').each(function(i,o){
+    							if($(o).is(':checked')){
+    								$(o).parent().parent().remove();
+    							}
+    						})
+    					}else{
+    						layer.msg(data, {icon: 2,time: 2000});
+    					}
+    				}
+    			})
+    		}, function(index){
+    			layer.close(index);
+    			return false;// 取消
+    		}
+    	);	
+    }
+    </script>        
+  </head>
+  <body style="background-color:#ecf0f5;">
+ 
+
+<div class="wrapper">
+ 
+
+ <style>#search-form > .form-group{margin-left: 10px;}</style>
+  <!-- Main content -->
+  <section class="content">
+    <div class="container-fluid">
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <h3 class="panel-title"><i class="fa fa-list"></i> 商品列表</h3>
+        </div>
+        <div class="panel-body">
+          <div class="navbar navbar-default">
+              <form action="" id="search-form2" class="navbar-form form-inline" method="post" onsubmit="return false">
+                <div class="form-group">
+                  <select name="cat_id" id="cat_id" class="form-control">
+                    <option value="">所有分类</option>
+                    <?php if(is_array($categoryList) || $categoryList instanceof \think\Collection || $categoryList instanceof \think\Paginator): if( count($categoryList)==0 ) : echo "" ;else: foreach($categoryList as $k=>$v): ?>
+                        <option value="<?php echo $v['id']; ?>"> <?php echo $v['name']; ?></option>
+			 		<?php endforeach; endif; else: echo "" ;endif; ?>
+                  </select>
+                </div>
+                <div class="form-group">
+                  <select name="brand_id" id="brand_id" class="form-control">
+                    <option value="">所有品牌</option>
+                        <?php if(is_array($brandList) || $brandList instanceof \think\Collection || $brandList instanceof \think\Paginator): if( count($brandList)==0 ) : echo "" ;else: foreach($brandList as $k=>$v): ?>
+                           <option value="<?php echo $v['id']; ?>"><?php echo $v['name']; ?></option>
+						<?php endforeach; endif; else: echo "" ;endif; ?>
+                  </select>
+                </div>                
+
+                <div class="form-group">
+                  <select name="is_on_sale" id="is_on_sale" class="form-control">
+                    <option value="">全部</option>                  
+                    <option value="1">上架</option>
+                    <option value="0">下架</option>
+                  </select>
+                </div>                
+
+                <div class="form-group">
+                  <label class="control-label" for="input-order-id">关键词</label>
+                  <div class="input-group">
+                    <input type="text" name="key_word" value="" placeholder="搜索词" id="input-order-id" class="form-control">
+                  </div>
+                </div>                  
+                <!--排序规则-->
+                <input type="hidden" name="orderby1" value="goods_id" />
+                <input type="hidden" name="orderby2" value="desc" />
+                <button type="submit" onclick="ajax_get_table('search-form2',1)" id="button-filter search-order" class="btn btn-primary"><i class="fa fa-search"></i> 筛选</button>
+                <button type="button" onclick="location.href='<?php echo U('Admin/tc/addEditGoods'); ?>'" class="btn btn-primary pull-right"><i class="fa fa-plus"></i>添加新商品</button>
+              </form>
+          </div>
+          <div id="ajax_return"> </div>
+        </div>
+      </div>
+    </div>
+    <!-- /.row --> 
+  </section>
+  <!-- /.content --> 
+</div>
+<!-- /.content-wrapper --> 
+<script>
+    $(document).ready(function(){
+		// ajax 加载商品列表
+        ajax_get_table('search-form2',1);
+
+    });
+
+
+    // ajax 抓取页面 form 为表单id  page 为当前第几页
+    function ajax_get_table(form,page){
+		cur_page = page; //当前页面 保存为全局变量
+            $.ajax({
+                type : "POST",
+                url:"/index.php?m=Admin&c=tc&a=ajaxGoodsList&p="+page,//+tab,
+                data : $('#'+form).serialize(),// 你的formid
+                success: function(data){
+                    $("#ajax_return").html('');
+                    $("#ajax_return").append(data);
+                }
+            });
+        }
+      
+        // 点击排序
+        function sort(field)
+        {
+           $("input[name='orderby1']").val(field);
+           var v = $("input[name='orderby2']").val() == 'desc' ? 'asc' : 'desc';             
+           $("input[name='orderby2']").val(v);
+           ajax_get_table('search-form2',cur_page);
+        }
+        
+        // 删除操作
+        function del(id)
+        {
+            if(!confirm('确定要删除吗?'))
+                return false;
+		$.ajax({
+			url:"/index.php?m=Admin&c=tc&a=delGoods&id="+id,
+			success: function(v){	
+                                var v =  eval('('+v+')');                                 
+                                if(v.hasOwnProperty('status') && (v.status == 1))
+                                        ajax_get_table('search-form2',cur_page);                                                      
+                                else
+                                        layer.msg(v.msg, {icon: 2,time: 1000}); //alert(v.msg);
+			}
+		}); 
+               return false;
+          }
+</script> 
+</body>
+</html>

@@ -129,8 +129,8 @@ class Goods extends Base {
                             'data'  => '',
                         );
                         $this->ajaxReturn($return_arr);                        
-                    }
-
+                    }   
+                   
                     if ($type == 2)
                     {
                         $GoodsCategory->isUpdate(true)->save(); // 写入数据到数据库
@@ -322,7 +322,7 @@ class Goods extends Base {
             $Goods->shipping_area_ids = $Goods->shipping_area_ids ? $Goods->shipping_area_ids : '';
             $Goods->spec_type = $Goods->goods_type;
             $price_ladder = array();
-            if ($Goods->ladder_amount[0] > 0) {
+            /*if ($Goods->ladder_amount[0] > 0) {//阶梯价格
                 foreach ($Goods->ladder_amount as $key => $value) {
                     $price_ladder[$key]['amount'] = intval($Goods->ladder_amount[$key]);
                     $price_ladder[$key]['price'] = floatval($Goods->ladder_price[$key]);
@@ -348,7 +348,7 @@ class Goods extends Base {
                 $Goods->price_ladder = serialize($price_ladder);
             } else {
                 $Goods->price_ladder = '';
-            }
+            }*/
 
             if ($type == 2) {
                 $Goods->isUpdate(true)->save(); // 写入数据到数据库

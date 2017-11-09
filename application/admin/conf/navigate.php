@@ -27,9 +27,12 @@
 				'action'=>array(
 					'tcGoodsCategory'=>'套餐商品分类',
                     'addEditGoodsCategory'=>'套餐商品分类编辑',
+
                     'brandList'=>'品牌列表',
                     'addEditBrand'=>'品牌编辑',
 
+                    'tcGoodsList'=>'套餐商品',
+                    'addEditGoods'=>'套餐商品编辑',
 
 					)
 				),

@@ -1,4 +1,4 @@
-<?php if (!defined('THINK_PATH')) exit(); /*a:3:{s:46:"./application/admin/view3/goods\goodsList.html";i:1503927232;s:48:"./application/admin/view3/public\min-header.html";i:1509601837;s:48:"./application/admin/view3/public\breadcrumb.html";i:1509608949;}*/ ?>
+<?php if (!defined('THINK_PATH')) exit(); /*a:3:{s:46:"./application/admin/view3/goods\goodsList.html";i:1503927232;s:48:"./application/admin/view3/public\min-header.html";i:1510128324;s:48:"./application/admin/view3/public\breadcrumb.html";i:1509608949;}*/ ?>
 <!DOCTYPE html>
 <html>
   <head>
@@ -24,7 +24,7 @@
 	<script src="__PUBLIC__/js/global.js"></script>
     <script src="__PUBLIC__/js/myFormValidate.js"></script>    
     <script src="__PUBLIC__/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
-    <script src="__PUBLIC__/js/layer/layer-min.js"></script><!-- 弹窗js 参考文档 http://layer.layui.com/-->
+    <script src="__PUBLIC__/js/layer/layer.js"></script><!-- 弹窗js 参考文档 http://layer.layui.com/-->
     <script src="__PUBLIC__/js/myAjax.js"></script>
     <script type="text/javascript">
     function delfunc(obj){

@@ -1,0 +1,3 @@
+<?php
+//000000000001{"1":{"id":1,"name":"\u662f\u6cd5\u56fd\u5c81\u7684\u6cd5\u56fd","parent_id":0,"level":1},"2":{"id":2,"name":"\u6d4b\u8bd5002","parent_id":0,"level":1},"4":{"id":4,"name":"\u6d4b\u8bd5003","parent_id":1,"level":2},"5":{"id":5,"name":"\u6d4b\u8bd5004","parent_id":0,"level":1},"10":{"id":10,"name":"\u513f\u7ae5","parent_id":0,"level":1},"11":{"id":11,"name":"\u8e29\u8e29\u8e29","parent_id":1,"level":2},"12":{"id":12,"name":"uyghur","parent_id":2,"level":2},"14":{"id":14,"name":"rrrrrrr","parent_id":2,"level":2},"15":{"id":15,"name":"fgggg","parent_id":14,"level":3}}
+?>
