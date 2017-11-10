@@ -1,4 +1,4 @@
-<?php if (!defined('THINK_PATH')) exit(); /*a:3:{s:40:"./application/admin/view3/tc\_goods.html";i:1510214426;s:48:"./application/admin/view3/public\min-header.html";i:1510128324;s:48:"./application/admin/view3/public\breadcrumb.html";i:1509608949;}*/ ?>
+<?php if (!defined('THINK_PATH')) exit(); /*a:3:{s:40:"./application/admin/view3/tc\_goods.html";i:1510279949;s:48:"./application/admin/view3/public\min-header.html";i:1510128324;s:48:"./application/admin/view3/public\breadcrumb.html";i:1509608949;}*/ ?>
 <!DOCTYPE html>
 <html>
   <head>
@@ -357,7 +357,7 @@
                                     
                                         <div class="goods_xc" style="width:100px; text-align:center; margin: 5px; display:inline-block;">
                                             <input type="hidden" name="goods_images[]" value="" />
-                                            <a href="javascript:void(0);" onclick="GetUploadify(10,'','goods','call_back2');"><img src="/public/images/add-button.jpg" width="100" height="100" /></a>
+                                            <a href="javascript:void(0);" onclick="GetUploadify(10,'','tc','call_back2');"><img src="/public/images/add-button.jpg" width="100" height="100" /></a>
                                             <br/>
                                             <a href="javascript:void(0)">&nbsp;&nbsp;</a>
                                         </div>                                        
@@ -452,26 +452,15 @@
                     }
 		});		
     }
-/** 以下 商品属性相关 js*/
-/** 以下 商品规格相关 js*/
 /** 以下是编辑时默认选中某个商品分类*/
 $(document).ready(function(){
 
 	<?php if($level_cat['2'] > 0): ?>
 		 // 商品分类第二个下拉菜单
-		 get_category('<?php echo $level_cat[1]; ?>','cat_id_2','<?php echo $level_cat[2]; ?>');	
+        get_tc_category('<?php echo $level_cat[1]; ?>','cat_id_2','<?php echo $level_cat[2]; ?>');
 	<?php endif; if($level_cat['3'] > 0): ?>
 		// 商品分类第二个下拉菜单
-		 get_category('<?php echo $level_cat[2]; ?>','cat_id_3','<?php echo $level_cat[3]; ?>');	 
-	<?php endif; ?>
-
-    //  扩展分类
-	<?php if($level_cat2['2'] > 0): ?>
-		 // 商品分类第二个下拉菜单
-		 get_category('<?php echo $level_cat2[1]; ?>','extend_cat_id_2','<?php echo $level_cat2[2]; ?>');	
-	<?php endif; if($level_cat2['3'] > 0): ?>
-		// 商品分类第二个下拉菜单
-		 get_category('<?php echo $level_cat2[2]; ?>','extend_cat_id_3','<?php echo $level_cat2[3]; ?>');	 
+        get_tc_category('<?php echo $level_cat[2]; ?>','cat_id_3','<?php echo $level_cat[3]; ?>');
 	<?php endif; ?>
 
 });

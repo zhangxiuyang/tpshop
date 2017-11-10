@@ -98,8 +98,7 @@ class Tc extends Base{
         //ajax提交验证
         if ((I('is_ajax') == 1) && IS_POST) {
             // 数据验证
-            $is_distribut = input('is_distribut');
-            $return_url = $is_distribut > 0 ? U('admin/Distribut/goods_list') : U('admin/Tc/tcGoodsList');
+
             $data = input('post.');
             $validate = \think\Loader::validate('TcGoods');
             if (!$validate->batch()->check($data)) {
@@ -130,36 +129,24 @@ class Tc extends Base{
                 $goods_id = $insert_id = $Goods->getLastInsID();
             }
             $Goods->afterSave($goods_id);
-            $GoodsLogic->saveGoodsAttr($goods_id, I('goods_type')); // 处理商品 属性
             $return_arr = array(
                 'status' => 1,
                 'msg' => '操作成功',
-                'data' => array('url' => $return_url),
+                'data' => array('url' => U('admin/Tc/tcGoodsList')),
             );
             $this->ajaxReturn($return_arr);
         }
 
         $goodsInfo = M('TcGoods')->where('goods_id=' . I('GET.id', 0))->find();
         $level_cat = $GoodsLogic->find_parent_cat($goodsInfo['cat_id']); // 获取分类默认选中的下拉框
-        $level_cat2 = $GoodsLogic->find_parent_cat($goodsInfo['extend_cat_id']); // 获取分类默认选中的下拉框
         $cat_list = M('tc_goods_category')->where("parent_id = 0")->select(); // 已经改成联动菜单
         $brandList = $GoodsLogic->getSortBrands();
-        $goodsType = M("GoodsType")->select();
-        $suppliersList = M("suppliers")->select();
-        $plugin_shipping = M('plugin')->where(array('type' => array('eq', 'shipping')))->select();//插件物流
-        $shipping_area = D('Shipping_area')->getShippingArea();//配送区域
-        $goods_shipping_area_ids = explode(',', $goodsInfo['shipping_area_ids']);
-        $this->assign('goods_shipping_area_ids', $goods_shipping_area_ids);
-        $this->assign('shipping_area', $shipping_area);
-        $this->assign('plugin_shipping', $plugin_shipping);
-        $this->assign('suppliersList', $suppliersList);
         $this->assign('level_cat', $level_cat);
-        $this->assign('level_cat2', $level_cat2);
         $this->assign('cat_list', $cat_list);
         $this->assign('brandList', $brandList);
         $this->assign('goodsType', $goodsType);
         $this->assign('goodsInfo', $goodsInfo);  // 商品详情
-        $goodsImages = M("GoodsImages")->where('goods_id =' . I('GET.id', 0))->select();
+        $goodsImages = M("TcGoodsImages")->where('goods_id =' . I('GET.id', 0))->select();
         $this->assign('goodsImages', $goodsImages);  // 商品相册
         return $this->fetch('_goods');
     }
@@ -358,11 +345,18 @@ class Tc extends Base{
         }
 /*套餐商品分类 结束*/
 
-/*套餐商品列表 开始*/
+/*套餐列表 开始*/
 
+    public function tcList(){
+        $TcGoodsLogic = new TcGoodsLogic();
+        $brandList = $TcGoodsLogic->getSortBrands();
+        $categoryList = $TcGoodsLogic->getSortCategory();
+        $this->assign('categoryList',$categoryList);
+        $this->assign('brandList',$brandList);
+        return $this->fetch();
+    }
 
-
-/*套餐商品列表 结束*/
+/*套餐列表 结束*/
     //套餐列表
 
 }

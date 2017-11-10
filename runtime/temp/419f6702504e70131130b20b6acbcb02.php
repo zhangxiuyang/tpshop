@@ -1,4 +1,4 @@
-<?php if (!defined('THINK_PATH')) exit(); /*a:1:{s:47:"./application/admin/view3/tc\ajaxGoodsList.html";i:1510211465;}*/ ?>
+<?php if (!defined('THINK_PATH')) exit(); /*a:1:{s:47:"./application/admin/view3/tc\ajaxGoodsList.html";i:1510283953;}*/ ?>
 <form method="post" enctype="multipart/form-data" target="_blank" id="form-order">
     <div class="table-responsive">
         <table class="table table-bordered table-hover">
@@ -24,9 +24,7 @@
                 <td class="text-left">
                     <a href="javascript:sort('shop_price');">价格</a>
                 </td>
-                <td class="text-left">
-                    <a href="javascript:void(0);">库存</a>
-                </td>                
+
                 <td class="text-center">
                     <a href="javascript:sort('is_on_sale');">上架</a>
                 </td>
@@ -48,14 +46,12 @@
                     <td class="text-left"><?php echo $list['goods_sn']; ?></td>
                     <td class="text-left"><?php echo $catList[$list[cat_id]][name]; ?></td>
                     <td class="text-left"><?php echo $list['shop_price']; ?></td>
-                    <td class="text-left">
-                    <input type="text" onkeyup="this.value=this.value.replace(/[^\d.]/g,'')" onpaste="this.value=this.value.replace(/[^\d.]/g,'')"  onchange="ajaxUpdateField(this);" name="store_count" size="4" data-table="goods" data-id="<?php echo $list['goods_id']; ?>" value="<?php echo $list['store_count']; ?>"/>   
-                    </td>
+
                     <td class="text-center">                        
                         <img width="20" height="20" src="__PUBLIC__/images/<?php if($list[is_on_sale] == 1): ?>yes.png<?php else: ?>cancel.png<?php endif; ?>" onclick="changeTableVal('goods','goods_id','<?php echo $list['goods_id']; ?>','is_on_sale',this)"/>
                     </td>
                     <td class="text-center">                         
-                        <input type="text" onkeyup="this.value=this.value.replace(/[^\d]/g,'')" onpaste="this.value=this.value.replace(/[^\d]/g,'')" onchange="updateSort('goods','goods_id','<?php echo $list['goods_id']; ?>','sort',this)" size="4" value="<?php echo $list['sort']; ?>" />
+                        <input type="text" onkeyup="this.value=this.value.replace(/[^\d]/g,'')" onpaste="this.value=this.value.replace(/[^\d]/g,'')" onchange="updateSort('tc_goods','goods_id','<?php echo $list['goods_id']; ?>','sort',this)" size="4" value="<?php echo $list['sort']; ?>" />
                     </td>                    
                     <td class="text-right">
                         <a href="<?php echo U('Admin/Tc/addEditGoods',array('id'=>$list['goods_id'])); ?>" class="btn btn-primary" title="编辑"><i class="fa fa-pencil"></i></a>

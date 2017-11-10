@@ -16,6 +16,8 @@ class TcGoods extends Validate
     ];
     //错误信息
     protected $message  = [
+        //'goods_id.require'                              => '商品id必填',
+        'goods_id.checkGoodsId'                         => '商品id错误',
         'goods_name.require'                            => '商品名称必填',
         'goods_name.min'                                => '名称长度至少3个字符',
         'goods_name.max'                                => '名称长度至多50个汉字',
@@ -44,5 +46,20 @@ class TcGoods extends Validate
         }else{
             return true;
         }
+    }
+    /**
+     * 检查是否存在
+     * @param $value
+     * @return bool
+     */
+    protected function checkGoodsId($value){
+        /*if(empty($value)){
+            return false;
+        }
+        $goods= Db::name('goods')->where('goods_id',$value)->find();
+        if(!$goods){
+            return '该商品不存在';
+        }*/
+        return true;
     }
 }
