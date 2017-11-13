@@ -347,13 +347,69 @@ class Tc extends Base{
 
 /*套餐列表 开始*/
 
+    /**
+     * 套餐列表
+     */
     public function tcList(){
-        $TcGoodsLogic = new TcGoodsLogic();
-        $brandList = $TcGoodsLogic->getSortBrands();
-        $categoryList = $TcGoodsLogic->getSortCategory();
-        $this->assign('categoryList',$categoryList);
-        $this->assign('brandList',$brandList);
+        $info = DB::name('tc')->select();
+        $this->assign("info",$info);
         return $this->fetch();
+    }
+    /**
+     * 套餐增加 编辑
+     */
+    public function addEditTc(){
+        //加载  提交  插入 更新
+        if(IS_GET)
+        {
+            $info = M('Tc')->where('tc_id=' . I('GET.tc_id', 0))->find();
+            //die(json_encode($info));
+            $this->assign('info',$info);
+            return $this->fetch('tc_edit');
+            exit;
+        }
+
+        $type = I('tc_id') > 0 ? 2 : 1; // 标识自动验证时的 场景 1 表示插入 2 表示更新
+        if(IS_POST) {
+            // 数据验证
+            $data = input('post.');
+            $validate = \think\Loader::validate('Tc');
+            if (!$validate->batch()->check($data)) {
+                $error = $validate->getError();
+                $error_msg = array_values($error);
+                $this->error($error_msg[0]);
+            } else {
+                if ($type == 2)
+                {
+                    $data['last_time'] = time();
+                    M("Tc")->update($data);
+                }
+                else
+                {
+                    //排序 默认 50
+                    if($data['sort']==''){
+                        $data['sort']='50';
+                    }
+                    $data['tc_time'] = time();
+                    $data['last_time'] = time();
+                    M("Tc")->insert($data);
+                }
+                $url = U('admin/Tc/tcList');
+                $this->success("操作成功",$url );
+            }
+        }
+    }
+    /**
+     * 删除套餐
+     */
+    public function delTc(){
+        // 判断此套餐下是否有商品在使用
+
+        $model = M("Tc");
+        $model->where('id ='.$_GET['id'])->delete();
+        $return_arr = array('status' => 1,'msg' => '操作成功','data'  =>'',);
+        //$return_arr = array('status' => -1,'msg' => '删除失败','data'  =>'',);
+        $this->ajaxReturn($return_arr);
     }
 
 /*套餐列表 结束*/

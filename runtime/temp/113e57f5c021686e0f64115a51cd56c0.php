@@ -1,3 +1,4 @@
+<?php if (!defined('THINK_PATH')) exit(); /*a:1:{s:51:"./application/admin/view3/public\dispatch_jump.html";i:1510540796;}*/ ?>
 <!DOCTYPE html>
 <html>
   <head>
@@ -36,7 +37,7 @@
 <?php }?>      
 	    <div class="margin text-center">
 	        <div class="copyright">
-	            2014-{:date('Y')} &copy; <a>TPshop v1.10.31</a>
+	            2014-<?php echo date('Y'); ?> &copy; <a>TPshop v1.10.31</a>
 	            <br/>
 	            <a>甲地长丰</a>出品
 	        </div>

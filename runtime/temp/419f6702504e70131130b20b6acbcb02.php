@@ -1,4 +1,4 @@
-<?php if (!defined('THINK_PATH')) exit(); /*a:1:{s:47:"./application/admin/view3/tc\ajaxGoodsList.html";i:1510283953;}*/ ?>
+<?php if (!defined('THINK_PATH')) exit(); /*a:1:{s:47:"./application/admin/view3/tc\ajaxGoodsList.html";i:1510558057;}*/ ?>
 <form method="post" enctype="multipart/form-data" target="_blank" id="form-order">
     <div class="table-responsive">
         <table class="table table-bordered table-hover">
@@ -48,7 +48,7 @@
                     <td class="text-left"><?php echo $list['shop_price']; ?></td>
 
                     <td class="text-center">                        
-                        <img width="20" height="20" src="__PUBLIC__/images/<?php if($list[is_on_sale] == 1): ?>yes.png<?php else: ?>cancel.png<?php endif; ?>" onclick="changeTableVal('goods','goods_id','<?php echo $list['goods_id']; ?>','is_on_sale',this)"/>
+                        <img width="20" height="20" src="__PUBLIC__/images/<?php if($list[is_on_sale] == 1): ?>yes.png<?php else: ?>cancel.png<?php endif; ?>" onclick="changeTableVal('tc_goods','goods_id','<?php echo $list['goods_id']; ?>','is_on_sale',this)"/>
                     </td>
                     <td class="text-center">                         
                         <input type="text" onkeyup="this.value=this.value.replace(/[^\d]/g,'')" onpaste="this.value=this.value.replace(/[^\d]/g,'')" onchange="updateSort('tc_goods','goods_id','<?php echo $list['goods_id']; ?>','sort',this)" size="4" value="<?php echo $list['sort']; ?>" />
