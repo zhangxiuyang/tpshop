@@ -1,4 +1,4 @@
-<?php if (!defined('THINK_PATH')) exit(); /*a:3:{s:41:"./application/admin/view3/tc\tc_edit.html";i:1510558881;s:48:"./application/admin/view3/public\min-header.html";i:1510128324;s:48:"./application/admin/view3/public\breadcrumb.html";i:1509608949;}*/ ?>
+<?php if (!defined('THINK_PATH')) exit(); /*a:3:{s:41:"./application/admin/view3/tc\tc_edit.html";i:1510640348;s:48:"./application/admin/view3/public\min-header.html";i:1510128324;s:48:"./application/admin/view3/public\breadcrumb.html";i:1509608949;}*/ ?>
 <!DOCTYPE html>
 <html>
   <head>
@@ -215,7 +215,7 @@
                     <div class="form-group">
                       <label for="text" class="col-sm-2 control-label">状态</label>
                       <div class="col-sm-5">
-                        <div class="col-sm-2">
+                        <div class="col-sm-2" style="min-width: 80px;">
                            <label><input type="radio" name="tc_status" value="1"<?php if($info[tc_status] == 1): ?> checked="checked"<?php endif; ?>> 可用 </label>
                         </div>
                          <div class="col-sm-3">

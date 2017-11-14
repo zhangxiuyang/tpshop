@@ -1,0 +1,90 @@
+<include file="public/min-header"/>
+<style>thead tr .sorting{text-align:center;}</style>
+<div class="wrapper">
+  <include file="public/breadcrumb"/>
+	<section class="content">
+       <div class="row">
+       		<div class="col-xs-12">
+	       		<div class="box">
+	           	<div class="box-header">
+	               <nav class="navbar navbar-default">	     
+				        <div class="collapse navbar-collapse">
+				            <div class="navbar-form row">
+					            <a href="{:U('Tc/addEditTcMonth',array('tc_id'=>$tc_id))}" class="btn btn-primary pull-right my-full"><i class="fa fa-plus"></i>新增月套餐</a>
+				            </div>
+				      	</div>
+	    			</nav>              
+	             </div>	    
+	             <!-- /.box-header -->
+	             <div class="box-body">	             
+	           		<div class="row">
+	            	<div class="col-sm-12">
+		              <table id="list-table" class="table table-bordered table-striped dataTable" role="grid" aria-describedby="example1_info">
+		                 <thead>
+		                   <tr role="row" align="center">
+			                   <th class="sorting" tabindex="0">名称</th>
+			                   <th class="sorting" tabindex="0">最后修改时间</th>
+			                   <th class="sorting" tabindex="0">状态</th>
+			                   <th class="sorting" tabindex="0">操作</th>
+		                   </tr>
+		                 </thead>
+						<tbody>
+						  <foreach name="info" item="vo" key="k" >
+						  	<tr role="row" align="center">
+		                     <td>{$vo.tc_name}</td>
+		                     <td>{$vo.last_time|date='Y-m-d H:i',###}</td>
+		                     <td>
+								 <input type="checkbox" name="zzz" lay-skin="switch" onclick="changeTableVal('tc','tc_id','{$vo.tc_id}','tc_status',this)" lay-text="开启|关闭">
+
+							 </td>
+		                     <td>
+								<a class="btn btn-primary my-full" href="{:U('Tc/addEditTcMonth',array('tc_month_id'=>$vo['tc_month_id']))}"><i class="fa fa-pencil"></i></a>
+		                      	<a class="btn btn-danger" href="javascript:void(0)" data-url="{:U('Tc/delTcMonth')}" data-id="{$vo.tc_month_id}" onclick="delfunc(this)"><i class="fa fa-trash-o"></i></a>
+							</td>
+		                   </tr>
+		                  </foreach>
+		                   </tbody>
+		                 <tfoot>
+		                 
+		                 </tfoot>
+		               </table>
+	               </div>
+	          </div>
+					 <input type="button" onclick="dd()">
+              <div class="row">
+              	    <div class="col-sm-6 text-left"></div>
+                    <div class="col-sm-6 text-right">{$page}</div>		
+              </div>
+	          </div><!-- /.box-body -->
+	        </div><!-- /.box -->
+       	</div>
+       </div>
+   </section>
+</div>
+<script>
+function delfun(obj){
+	if(confirm('确认删除')){		
+		$.ajax({
+			type : 'post',
+			url : $(obj).attr('data-url'),
+			data : {act:'del',id:$(obj).attr('data-id')},
+			dataType : 'json',
+			success : function(data){
+				if(data.status){
+					$(obj).parent().parent().remove();
+                    layer.alert(data.msg, {icon: 1});  //alert('删除成功');
+				}else{
+					layer.alert('删除失败', {icon: 2});  //alert('删除失败');
+				}
+			}
+		})
+	}
+	return false;
+}
+$(".my-full").on('click',function(){
+    //var index = parent.layer.getFrameIndex(window.name); //获取窗口索引
+    //parent.layer.full(index);
+});
+</script>
+</body>
+</html>

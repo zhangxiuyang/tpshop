@@ -1,4 +1,4 @@
-<?php if (!defined('THINK_PATH')) exit(); /*a:3:{s:40:"./application/admin/view3/tc\TcList.html";i:1510560300;s:48:"./application/admin/view3/public\min-header.html";i:1510128324;s:48:"./application/admin/view3/public\breadcrumb.html";i:1509608949;}*/ ?>
+<?php if (!defined('THINK_PATH')) exit(); /*a:3:{s:40:"./application/admin/view3/tc\TcList.html";i:1510645093;s:48:"./application/admin/view3/public\min-header.html";i:1510128324;s:48:"./application/admin/view3/public\breadcrumb.html";i:1509608949;}*/ ?>
 <!DOCTYPE html>
 <html>
   <head>
@@ -112,6 +112,7 @@
   <body style="background-color:#ecf0f5;">
  
 
+<style>thead tr .sorting{text-align:center;}</style>
 <div class="wrapper">
   
 
@@ -150,11 +151,11 @@
 		                     <td><?php echo $vo['tc_name']; ?></td>
 		                     <td><?php echo date('Y-m-d H:i',$vo['tc_time']); ?></td>
 		                     <td><?php echo date('Y-m-d H:i',$vo['last_time']); ?></td>
-		                     <td >
+		                     <td>
 								 <img width="20" height="20" src="__PUBLIC__/images/<?php if($vo[tc_status] == 1): ?>yes.png<?php else: ?>cancel.png<?php endif; ?>" onclick="changeTableVal('tc','tc_id','<?php echo $vo['tc_id']; ?>','tc_status',this)"/>
 							 </td>
 		                     <td>
-								 <a class="btn btn-info" title="查看详情"><i class="fa fa-eye"></i></a>
+								 <a data-url="<?php echo U('Tc/tcMonthList',array('tc_id'=>$vo['tc_id'])); ?>" data-name="<?php echo $vo['tc_name']; ?>" onclick="checkMonth(this)" class="btn btn-info" title="查看详情"><i class="fa fa-eye"></i></a>
 		                      <a class="btn btn-primary" href="<?php echo U('Tc/addEditTc',array('act'=>'edit','tc_id'=>$vo['tc_id'])); ?>"><i class="fa fa-pencil"></i></a>
 		                      <a class="btn btn-danger" href="javascript:void(0)" data-url="<?php echo U('Tc/delTc'); ?>" data-id="<?php echo $vo['tc_id']; ?>" onclick="delfun(this)"><i class="fa fa-trash-o"></i></a>
 							</td>
@@ -183,11 +184,12 @@ function delfun(obj){
 		$.ajax({
 			type : 'post',
 			url : $(obj).attr('data-url'),
-			data : {act:'del',level_id:$(obj).attr('data-id')},
+			data : {act:'del',id:$(obj).attr('data-id')},
 			dataType : 'json',
 			success : function(data){
-				if(data){
+				if(data.status){
 					$(obj).parent().parent().remove();
+                    layer.alert(data.msg, {icon: 1});  //alert('删除成功');
 				}else{
 					layer.alert('删除失败', {icon: 2});  //alert('删除失败');
 				}
@@ -196,6 +198,19 @@ function delfun(obj){
 	}
 	return false;
 }
-</script>  
+function checkMonth(obj) {
+    layer.open({
+        type: 2,
+        title: $(obj).attr('data-name'),
+        maxmin: true,
+        shadeClose: false, //点击遮罩关闭层
+        area : ['960px' , '720px'],
+        content: $(obj).attr('data-url'),
+        end:function () {
+			window.location.reload();
+        }
+    });
+}
+</script>
 </body>
 </html>

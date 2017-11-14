@@ -406,13 +406,133 @@ class Tc extends Base{
         // 判断此套餐下是否有商品在使用
 
         $model = M("Tc");
-        $model->where('id ='.$_GET['id'])->delete();
+        $model->where('tc_id ='.$_POST['id'])->delete();
         $return_arr = array('status' => 1,'msg' => '操作成功','data'  =>'',);
         //$return_arr = array('status' => -1,'msg' => '删除失败','data'  =>'',);
         $this->ajaxReturn($return_arr);
     }
+    /**
+     * 删除 月 套餐
+     */
+    public function delTcMonth(){
+        if(empty($_POST['del_id'])){
+            $this->ajaxReturn('参数异常');
+        }
+        $model = M("TcMonth");
+        $return = $model->where('tc_month_id ='.$_POST['del_id'])->delete();
+        if($return != false){
+            $this->ajaxReturn(1);
+        }else{
+            $this->ajaxReturn('删除异常，请刷新重试!');
+        }
 
-/*套餐列表 结束*/
+    }
+
+    /**
+     * 查看套餐 月 套餐
+     */
+    public function tcMonthList(){
+        $tcId = $_GET['tc_id'];
+        if(empty($tcId)){
+            die("参数异常！");
+        }
+        $tcInfo = DB::name('tc')->where('tc_id='.$tcId)->select();
+        if(empty($tcInfo)){
+            die("该套餐不存在，请刷新重试！");
+        }
+        $info = DB::name('tc_month')->where('tc_id='.$tcId)->select();
+        $this->assign("tc_id",$tcId);
+        $this->assign("info",$info);
+        return $this->fetch();
+    }
+
+    /**
+     * 添加 编辑 月 套餐
+     */
+    public function addEditTcMonth(){
+        //新增 编辑
+        if(IS_GET)
+        {
+            //检查 套餐id 是否存在
+            $tcId = I('GET.tc_id', 0);
+            $tcInfo = DB::name('tc')->where('tc_id='.$tcId)->select();
+            if(empty($tcInfo)){
+                die("该套餐已不存在，请后退刷新重试！");
+            }
+            //检查 套餐 月 id 是否存在
+            if(I('GET.tc_month_id', 0)>0){
+                $info = M('TcMonth')->where('tc_month_id=' . I('GET.tc_month_id', 0))->find();
+            }
+            if(!isset($info['tc_status'])){
+                $info['tc_status'] = 1;//初始化 'tc_status'
+            }
+            //获取 所属 父 套餐 列表
+            $tcInfo = M('Tc')->select();
+            $this->assign('tcInfo',$tcInfo);
+            $this->assign('info',$info);
+            return $this->fetch();
+            exit;
+        }
+
+        //提交 保存
+        if(IS_POST){
+
+        }
+
+    }
+    /**
+     * 选择搜索商品
+     */
+    public function search_goods()
+    {
+        $brandList =  M("brand")->select();
+        $categoryList =  M("tc_goods_category")->select();
+        $this->assign('categoryList',$categoryList);
+        $this->assign('brandList',$brandList);
+        $where = ' is_on_sale = 1 ';//搜索条件
+        I('intro')  && $where = "$where and ".I('intro')." = 1";
+        if(I('cat_id')){
+            $this->assign('cat_id',I('cat_id'));
+            $grandson_ids = getCatGrandson(I('cat_id'));
+            $where = " $where  and cat_id in(".  implode(',', $grandson_ids).") "; // 初始化搜索条件
+
+        }
+        if(I('brand_id')){
+            $this->assign('brand_id',I('brand_id'));
+            $where = "$where and brand_id = ".I('brand_id');
+        }
+        if(!empty($_REQUEST['keywords']))
+        {
+            $this->assign('keywords',I('keywords'));
+            $where = "$where and (goods_name like '%".I('keywords')."%' or keywords like '%".I('keywords')."%')" ;
+        }
+        $goods_count =M('goods')->where($where)->count();
+        $Page = new Page($goods_count,C('PAGESIZE'));
+        $goodsList = M('goods')->where($where)->order('goods_id DESC')->limit($Page->firstRow,$Page->listRows)->select();
+
+        foreach($goodsList as $key => $val)
+        {
+            $spec_goods = M('spec_goods_price')->where("goods_id = {$val['goods_id']}")->select();
+            $goodsList[$key]['spec_goods'] = $spec_goods;
+        }
+        if($goodsList){
+            //计算商品数量
+            foreach ($goodsList as $value){
+                if($value['spec_goods']){
+                    $count += count($value['spec_goods']);
+                }else{
+                    $count++;
+                }
+            }
+            $this->assign('totalSize',$count);
+        }
+
+        $this->assign('page',$Page->show());
+        $this->assign('goodsList',$goodsList);
+        return $this->fetch();
+    }
+
+    /*套餐列表 结束*/
     //套餐列表
 
 }
