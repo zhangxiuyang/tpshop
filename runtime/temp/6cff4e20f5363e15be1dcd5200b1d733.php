@@ -1,4 +1,4 @@
-<?php if (!defined('THINK_PATH')) exit(); /*a:3:{s:45:"./application/admin/view3/tc\tcMonthList.html";i:1510645042;s:48:"./application/admin/view3/public\min-header.html";i:1510128324;s:48:"./application/admin/view3/public\breadcrumb.html";i:1509608949;}*/ ?>
+<?php if (!defined('THINK_PATH')) exit(); /*a:3:{s:45:"./application/admin/view3/tc\tcMonthList.html";i:1510718437;s:48:"./application/admin/view3/public\min-header.html";i:1510128324;s:48:"./application/admin/view3/public\breadcrumb.html";i:1509608949;}*/ ?>
 <!DOCTYPE html>
 <html>
   <head>
@@ -124,7 +124,7 @@
 	               <nav class="navbar navbar-default">	     
 				        <div class="collapse navbar-collapse">
 				            <div class="navbar-form row">
-					            <a href="<?php echo U('Tc/addEditTcMonth',array('tc_id'=>$tc_id)); ?>" class="btn btn-primary pull-right my-full"><i class="fa fa-plus"></i>新增月套餐</a>
+					            <a href="<?php echo U('Tc/addEditTcMonth',array('tc_id'=>$tc_id)); ?>" onclick="layer.load(1);" class="btn btn-primary pull-right my-full"><i class="fa fa-plus"></i>新增月套餐</a>
 				            </div>
 				      	</div>
 	    			</nav>              
@@ -199,19 +199,6 @@ $(".my-full").on('click',function(){
     //var index = parent.layer.getFrameIndex(window.name); //获取窗口索引
     //parent.layer.full(index);
 });
-//选择商品
-function selectGoods(){
-    var url = "/index.php/Admin/Tc/search_goods";
-    layer.open({
-        type: 2,
-        title: '选择商品',
-        shadeClose: true,
-        shade: 0.8,
-        area: ['60%', '60%'],
-        content: url,
-    });
-}
-
 </script>
 </body>
 </html>

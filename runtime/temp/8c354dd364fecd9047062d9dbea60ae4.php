@@ -1,4 +1,4 @@
-<?php if (!defined('THINK_PATH')) exit(); /*a:2:{s:46:"./application/admin/view3/tc\search_goods.html";i:1510647079;s:44:"./application/admin/view3/public\layout.html";i:1503927232;}*/ ?>
+<?php if (!defined('THINK_PATH')) exit(); /*a:2:{s:46:"./application/admin/view3/tc\search_goods.html";i:1510733138;s:44:"./application/admin/view3/public\layout.html";i:1503927232;}*/ ?>
 <!doctype html>
 <html>
 <head>
@@ -114,7 +114,11 @@
 
 </head>
 <script type="text/javascript" src="__ROOT__/public/static/js/layer/laydate/laydate.js"></script>
-
+<style>
+	body{min-width: 760px;}
+	.page{min-width: 750px;}
+    /*.new_tab{display: none}*/
+</style>
 <body style="background-color: rgb(255, 255, 255); overflow: auto; cursor: default; -moz-user-select: inherit;">
 <div id="append_parent"></div>
 <div id="ajaxwaitid"></div>
@@ -125,7 +129,7 @@
         <h3>商品列表</h3>
         <h5>(共<?php echo $totalSize; ?>条记录)</h5>
       </div>
-      <div title="刷新数据" class="pReload"><i class="fa fa-refresh"></i></div>
+
 	  <form class="navbar-form form-inline"  method="post" action="<?php echo U('Admin/Tc/search_goods'); ?>"  name="search-form2" id="search-form2">
       <div class="sDiv">
         <div class="sDiv2">	 
@@ -144,13 +148,6 @@
 					<?php endforeach; endif; else: echo "" ;endif; ?>
              </select>
          </div>
-         <div class="sDiv2">	 
-             <select name="intro" class="select">
-                        <option value="0">全部</option>
-                        <option value="is_new">新品</option>
-                        <option value="is_recommend">推荐</option>
-                    </select>
-          </div>
          <div class="sDiv2" style="border:0px">	 
           <input type="text" name="keywords" value="<?php echo $keywords; ?>" placeholder="搜索词" id="input-order-id" class="input-txt">
         </div>
@@ -162,7 +159,7 @@
     </div>
     <div class="hDiv">
       <div class="hDivBox" id="ajax_return">
-        <table cellspacing="0" cellpadding="0" id="table_head">
+        <table cellspacing="0" cellpadding="0" id="table_head" style="width: 100%">
           <thead>
 	        	<tr>
 	              <th class="sign" axis="col0">
@@ -171,24 +168,16 @@
                     </div>
 	              </th>
 	              <th align="left" abbr="order_sn" axis="col3" class="">
-	                <div style="text-align: left; width: 560px;" class="">商品名称</div>
+	                <div style="text-align: left; width: 400px;" class="">商品名称</div>
 	              </th>
-	              <th align="left" abbr="consignee" axis="col4" class="">
-	                <div style="text-align: left; width: 120px;" class="">价格</div>
-	              </th>
-	              <th align="center" abbr="article_show" axis="col5" class="">
-	                <div style="text-align: center; width: 80px;" class="">库存</div>
-	              </th>
-	              <th align="center" abbr="article_show" axis="col5" class="" style="display:none;">
-	                <div style="text-align: center; width: 80px;" class="">购买数量
-	                <input type="checkbox" checked="checked" style="display:none;" /></div>
-	              </th>
-	              <th align="center" abbr="article_time" axis="col6" class="">
-	                <div style="text-align: center; width: 80px;" class="">操作</div>
-	              </th>
-	              <th style="width:100%" axis="col7">
-	                <div></div>
-	              </th>
+                    <th align="left" abbr="consignee" axis="col4" class="">
+						<div style="text-align: center; width: 80px;" class="">本店价格</div>
+					</th>
+                    <th align="left" abbr="consignee" axis="col4" class="">
+                        <div style="text-align: center; width: 80px;" class="">市场价格</div>
+                    </th>
+
+
 	            </tr>
 	          </thead>
         </table>
@@ -199,68 +188,33 @@
       <table cellspacing="0" cellpadding="0" id="goos_table">
          <tbody>
       	<?php if(is_array($goodsList) || $goodsList instanceof \think\Collection || $goodsList instanceof \think\Paginator): $i = 0; $__LIST__ = $goodsList;if( count($__LIST__)==0 ) : echo "" ;else: foreach($__LIST__ as $key=>$list): $mod = ($i % 2 );++$i;?>
-      	<!--如果有商品规格-->
-        <?php if($list['spec_goods'] != null): if(is_array($list['spec_goods']) || $list['spec_goods'] instanceof \think\Collection || $list['spec_goods'] instanceof \think\Paginator): $i = 0; $__LIST__ = $list['spec_goods'];if( count($__LIST__)==0 ) : echo "" ;else: foreach($__LIST__ as $key=>$spec_goods): $mod = ($i % 2 );++$i;?>
+
+
 			<tr date-id="<?php echo $list['goods_id']; ?>">
-	              <td class="sign" axis="col0">
+	              <td class="sign first_ico" axis="col0">
 	                <div style="width: 24px;"><i class="ico-check"></i></div>
+
 	              </td>
 	              <td align="left" abbr="order_sn" axis="col3" class="">
-	                <div style="text-align: left; width: 560px;" class=""><?php echo getSubstr($list['goods_name'],0,15); ?></div>
+	                <div style="text-align: left; width: 400px;" class=""><?php echo getSubstr($list['goods_name'],0,36); ?></div>
 	              </td>
 	              <td align="left" abbr="consignee" axis="col4" class="">
-	                <div style="text-align: left; width: 120px;" class=""><?php echo $spec_goods[price]; ?></div>
+	                <div style="text-align: right; width: 80px;" class=""><?php echo $list[shop_price]; ?></div>
 	              </td>
 	              <td align="center" abbr="article_show" axis="col5" class="">
-	                <div style="text-align: center; width: 80px;" class=""><?php echo $spec_goods[store_count]; ?></div>
+	                <div style="text-align: right; width: 80px;" class=""><?php echo $list[market_price]; ?></div>
 	              </td>
-	              <td align="center" abbr="article_show" axis="col5" class="" style="display:none;">
-	                <div style="text-align: center; width: 120px;" class="">
-	                	<input type="text" name="goods_id[<?php echo $list['goods_id']; ?>][<?php echo $spec_goods[key]; ?>][goods_num]"  value="1" class="input-txt" style="width:60px !important;text-align:center" onkeyup="this.value=this.value.replace(/[^\d.]/g,'')" onpaste="this.value=this.value.replace(/[^\d.]/g,'')" style="display:none;" />
-	                	<input type="checkbox" style="display:none;" />
-	                </div>
-	              </td>
-	              <td align="center" abbr="article_time" axis="col6" class="">
-	                <div style="text-align: center; width: 80px;" class="">
-	                	<a class="btn red" href="javascript:void(0);" onclick="delRow(this)"><i class="fa fa-trash-o"></i>删除</a>
-	                </div>
-	              </td>
-	              <td style="width:100%" axis="col7">
-	                <div></div>
-	              </td>
-	          	</tr>
-			<?php endforeach; endif; else: echo "" ;endif; else: ?>
-        		<tr date-id="<?php echo $list['goods_id']; ?>">
-	              <td class="sign" axis="col0">
-	                <div style="width: 24px;"><i class="ico-check"></i></div>
-	              </td>
-	              <td align="left" abbr="order_sn" axis="col3" class="">
-	                <div style="text-align: left; width: 560px;" class=""><?php echo getSubstr($list['goods_name'],0,33); ?></div>
-	              </td>
-	              <td align="left" abbr="consignee" axis="col4" class="">
-	                <div style="text-align: left; width: 120px;" class=""><?php echo $list['shop_price']; ?></div>
-	              </td>
-	              <td align="center" abbr="article_show" axis="col5" class="">
-	                <div style="text-align: center; width: 80px;" class="">
-	                	<?php echo $list['store_count']; ?>
-	                </div>
-	              </td>
-	              <td align="center" abbr="article_show" axis="col5" class="" style="display:none;" >
-	                <div style="text-align: center; width: 120px;" class=""   >
-	                	<input type="text" name="goods_id[<?php echo $list['goods_id']; ?>][key][goods_num]" onkeyup="this.value=this.value.replace(/[^\d.]/g,'')" class="input-txt" style="width:60px !important;text-align:center" onpaste="this.value=this.value.replace(/[^\d.]/g,'')" value="1" class="input-sm"  style="display:none;" />
-	                	<input type="checkbox" style="display:none;" />
-	                </div>
-	              </td>
-	              <td align="center" abbr="article_time" axis="col6" class="">
-	                <div style="text-align: center; width: 80px;" class="">
-	                	<a class="btn red" href="javascript:void(0);" onclick="javascript:$(this).parent().parent().parent().remove();"><i class="fa fa-trash-o"></i>删除</a>
-	                </div>
-	              </td>
-	              <td style="width:100%" axis="col7">
-	                <div></div>
-	              </td>
-	          	</tr>
-        <?php endif; endforeach; endif; else: echo "" ;endif; ?>
+                  <td align="center" abbr="article_show" axis="col5" class="" style="display:none;" >
+                    <div style="text-align: center; width: 60px;" class=""   >
+                        <input type="checkbox" style="display:none;" />
+                    </div>
+                  </td>
+
+
+            </tr>
+
+
+	    <?php endforeach; endif; else: echo "" ;endif; ?>
 	    </tbody>
 	    </table>
 	    <div class="sDiv" style="float:left;margin-top:10px">
@@ -304,8 +258,7 @@ $(document).ready(function(){
  
 	
 function select_goods()
-{	  
- 
+{
 	   if($("input[type='checkbox']:checked").length == 0)
 	   {
 		   layer.alert('请选择商品', {icon: 2}); //alert('请选择商品');
@@ -319,11 +272,14 @@ function select_goods()
 		   }
 		   $(this).parent().parent().show();
 		   $(this).siblings().show();
-		   $(this).remove();
+           $(this).parent().append("<input type='number' name='num' min='1' max='999' maxlength='3' value='1'>");
+           $(this).parent().parent().parent().append('<td><a class="btn red " href="javascript:void(0);" onclick="javascript:$(this).parent().parent().remove();">删除</a></td>');
+           $(this).remove();
 	    });
 		$(".btn-info").remove();
-		var tabHtml = $('#table_head').append($('#goos_table')).html();
-      javascript:window.parent.call_back(tabHtml.replace(/选择/,'购买数量'));
+		var tabHtml = $('#goos_table').html();
+     alert(tabHtml);
+		 javascript:window.parent.call_back(tabHtml);
 }    
 </script>
 </body>

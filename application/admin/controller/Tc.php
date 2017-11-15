@@ -27,7 +27,7 @@ class Tc extends Base{
     public function ajaxGoodsList(){
 
         $where = ' 1 = 1 '; // 搜索条件
-        I('intro')    && $where = "$where and ".I('intro')." = 1" ;
+
         I('brand_id') && $where = "$where and brand_id = ".I('brand_id') ;
         (I('is_on_sale') !== '') && $where = "$where and is_on_sale = ".I('is_on_sale') ;
         $cat_id = I('cat_id');
@@ -40,7 +40,7 @@ class Tc extends Base{
 
         if($cat_id > 0)
         {
-            $grandson_ids = getCatGrandson($cat_id);
+            $grandson_ids = getTcCatGrandson($cat_id);
             $where .= " and cat_id in(".  implode(',', $grandson_ids).") "; // 初始化搜索条件
         }
 
@@ -490,10 +490,10 @@ class Tc extends Base{
         $this->assign('categoryList',$categoryList);
         $this->assign('brandList',$brandList);
         $where = ' is_on_sale = 1 ';//搜索条件
-        I('intro')  && $where = "$where and ".I('intro')." = 1";
+
         if(I('cat_id')){
             $this->assign('cat_id',I('cat_id'));
-            $grandson_ids = getCatGrandson(I('cat_id'));
+            $grandson_ids = getTcCatGrandson(I('cat_id'));
             $where = " $where  and cat_id in(".  implode(',', $grandson_ids).") "; // 初始化搜索条件
 
         }
@@ -506,26 +506,10 @@ class Tc extends Base{
             $this->assign('keywords',I('keywords'));
             $where = "$where and (goods_name like '%".I('keywords')."%' or keywords like '%".I('keywords')."%')" ;
         }
-        $goods_count =M('goods')->where($where)->count();
+        $goods_count =M('tc_goods')->where($where)->count();
         $Page = new Page($goods_count,C('PAGESIZE'));
-        $goodsList = M('goods')->where($where)->order('goods_id DESC')->limit($Page->firstRow,$Page->listRows)->select();
+        $goodsList = M('tc_goods')->where($where)->order('goods_id DESC')->limit($Page->firstRow,$Page->listRows)->select();
 
-        foreach($goodsList as $key => $val)
-        {
-            $spec_goods = M('spec_goods_price')->where("goods_id = {$val['goods_id']}")->select();
-            $goodsList[$key]['spec_goods'] = $spec_goods;
-        }
-        if($goodsList){
-            //计算商品数量
-            foreach ($goodsList as $value){
-                if($value['spec_goods']){
-                    $count += count($value['spec_goods']);
-                }else{
-                    $count++;
-                }
-            }
-            $this->assign('totalSize',$count);
-        }
 
         $this->assign('page',$Page->show());
         $this->assign('goodsList',$goodsList);

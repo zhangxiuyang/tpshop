@@ -1,4 +1,4 @@
-<?php if (!defined('THINK_PATH')) exit(); /*a:3:{s:48:"./application/admin/view3/tc\addEditTcMonth.html";i:1510645948;s:48:"./application/admin/view3/public\min-header.html";i:1510128324;s:48:"./application/admin/view3/public\breadcrumb.html";i:1509608949;}*/ ?>
+<?php if (!defined('THINK_PATH')) exit(); /*a:3:{s:48:"./application/admin/view3/tc\addEditTcMonth.html";i:1510733240;s:48:"./application/admin/view3/public\min-header.html";i:1510128324;s:48:"./application/admin/view3/public\breadcrumb.html";i:1509608949;}*/ ?>
 <!DOCTYPE html>
 <html>
   <head>
@@ -122,6 +122,11 @@
         border-radius: 3px;
         cursor: pointer;
     }
+    .first_ico{display: none}
+    #goods_td{ padding-right: 0; padding-left: 0; }
+    table{ margin-bottom: 0; }
+    .hidd{display: inline-block}
+    .new_tab{display: table-cell}
 </style>
 <script type="text/javascript">
     window.UEDITOR_Admin_URL = "/public/plugins/Ueditor/";
@@ -265,6 +270,39 @@
 
                                     </td>
                                 </tr>
+                                <tr>
+                                    <td>商品列表:</td>
+                                    <td>
+                                            <div class="ncap-order-details" id="goods_list_div" style="display: none" >
+
+                                                        <div class="col-xs-10" id="goods_td" >
+                                                            <table class="table table-bordered">
+                                                                <thead>
+                                                                <th align="left" abbr="order_sn" axis="col3" class="">
+                                                                    <div style="text-align: left; width: 400px;" class="">商品名称</div>
+                                                                </th>
+                                                                <th align="left" abbr="consignee" axis="col4" class="">
+                                                                    <div style="text-align: center; width: 80px;" class="">本店价格</div>
+                                                                </th>
+                                                                <th align="left" abbr="consignee" axis="col4" class="">
+                                                                    <div style="text-align: center; width: 80px;" class="">市场价格</div>
+                                                                </th>
+                                                                <th align="left" abbr="consignee" axis="col4" class="">
+                                                                    <div style="text-align: center; width: 80px;" class="">购买数量</div>
+                                                                </th>
+                                                                <th align="left" abbr="consignee" axis="col4" class="">
+                                                                    <div style="text-align: center; width: 60px;" class="">操作</div>
+                                                                </th>
+
+                                                                </tr>
+                                                                </thead>
+                                                            </table>
+                                                        </div>
+                                            </div>
+
+                                        </dd>
+                                    </td>
+                                </tr>
 
 
 
@@ -303,10 +341,22 @@
             title: '选择商品',
             shadeClose: true,
             shade: 0.8,
-            area: ['60%', '60%'],
+            area: ['86%', '80%'],
             content: url,
         });
     }
+    // 选择商品返回
+    function call_back(table_html){
+        $('#goods_list_div').show();
+//alert(table_html);
+        var thead = '';
+        $('#goods_td').find('.table-bordered').append(table_html);
+
+        //过滤选择重复商品
+        layer.closeAll('iframe');
+        $(".n_showbtn").show();
+    }
+
 
 
 </script>
