@@ -11,9 +11,11 @@
     }
     .first_ico{display: none}
     #goods_td{ padding-right: 0; padding-left: 0; }
-    table{ margin-bottom: 0; }
+    #goods_list_div .col-xs-10 table{ margin-bottom: 0; background-color: aliceblue;}
     .hidd{display: inline-block}
     .new_tab{display: table-cell}
+    #goodstotalshopprice,#goodstotalmarketprice{
+        display: inline-block; width: 30px; }
 </style>
 <script type="text/javascript">
     window.UEDITOR_Admin_URL = "/public/plugins/Ueditor/";
@@ -126,8 +128,8 @@
                                     <td>所属套餐:</td>
                                     <td>
                                       <div class="col-xs-3">
-                                      <select name="tc_id" id="cat_id" class="form-control" style="width:250px;margin-left:-15px;">
-                                        <option value="0">请选所属套餐</option>
+                                      <select name="tc_id" id="tc_id" class="form-control" style="width:250px;margin-left:-15px;">
+                                        <option value="">请选所属套餐</option>
                                              <foreach name="tcInfo" item="v" key="k" >
                                                <option value="{$v['tc_id']}" <if condition="$v['tc_id'] eq $info.tc_id">selected="selected"</if> >
                                                		{$v['tc_name']}
@@ -159,9 +161,9 @@
                                 <tr>
                                     <td>商品列表:</td>
                                     <td>
-                                            <div class="ncap-order-details" id="goods_list_div" style="display: none" >
+                                        <div class="ncap-order-details" id="goods_list_div" <if condition="$info['tc_month_id'] eq 0">style="display: none" <else />style="display: block"</if>>
 
-                                                        <div class="col-xs-10" id="goods_td" >
+                                        <div class="col-xs-10" id="goods_td" >
                                                             <table class="table table-bordered">
                                                                 <thead>
                                                                 <th align="left" abbr="order_sn" axis="col3" class="">
@@ -178,6 +180,35 @@
                                                                 </th>
                                                                 <th align="left" abbr="consignee" axis="col4" class="">
                                                                     <div style="text-align: center; width: 60px;" class="">操作</div>
+                                                                </th>
+
+                                                                </tr>
+                                                                </thead>
+                                                                {$info['goods_html']}
+                                                            </table>
+                                                            <table class="table table-bordered">
+                                                                <thead>
+
+                                                                <th align="left"  axis="col4" class="">
+                                                                    <div style="text-align: center; width: 80px;" class="">本店总价：</div>
+                                                                </th>
+                                                                <th align="left"  axis="col4" class="">
+                                                                    <div style="text-align: left; width: 80px;" class="">
+                                                                        <span id="goodsTotalShopPrice" name="goodsTotalShopPrice" ></span>
+                                                                    </div>
+                                                                </th>
+                                                                <th align="left"  axis="col4" class="">
+                                                                    <div style="text-align: center; width: 80px;" class="">市场总价：</div>
+                                                                </th>
+                                                                <th align="left"  axis="col4" class="">
+                                                                    <div style="text-align: left; width: 80px;" class="">
+                                                                        <span type="text" id="goodsTotalMarketPrice" ></span>
+                                                                    </div>
+                                                                </th>
+                                                                <th align="left"  axis="col4" class="">
+                                                                    <div style="text-align: center; width: 60px;" class="">
+                                                                        <a href="javascript:;" onclick="getGoodsTotal()" >刷新</a>
+                                                                    </div>
                                                                 </th>
 
                                                                 </tr>
@@ -208,7 +239,7 @@
                         <!-- 商品相册-->
                     </div>
                     <div class="pull-right">
-                        <input type="hidden" name="goods_id" value="{$info.tc_month_id}">
+                        <input type="hidden" name="tc_month_id" value="{$info.tc_month_id}">
                         <input type="hidden" name="__token__" value="{$Request.token}" />                        
                         <button class="btn btn-primary" onclick="ajax_submit_form('addEditTcMonthForm','{:U('Tc/addEditTcMonth?is_ajax=1')}');" title="" data-toggle="tooltip" type="button" data-original-title="保存">保存</button>
                     </div>
@@ -237,13 +268,24 @@
 //alert(table_html);
         var thead = '';
         $('#goods_td').find('.table-bordered').append(table_html);
+
         //过滤选择重复商品
+        var new_arr = [];
+        $('input[name="goods_id_c"]').each(function(i,o){
+            var items = $(o).val();
+            if($.inArray(items,new_arr)==-1) {
+                new_arr.push(items);
+            }else{
+                $(o).parent().parent().remove();
+            }
+        });
         layer.closeAll('iframe');
         $(".n_showbtn").show();
     }
+    //计算商品价格
+    function getGoodsTotal() {
 
-
-
+    }
 </script>
 </body>
 </html>

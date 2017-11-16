@@ -1,4 +1,4 @@
-<?php if (!defined('THINK_PATH')) exit(); /*a:3:{s:48:"./application/admin/view3/tc\addEditTcMonth.html";i:1510733240;s:48:"./application/admin/view3/public\min-header.html";i:1510128324;s:48:"./application/admin/view3/public\breadcrumb.html";i:1509608949;}*/ ?>
+<?php if (!defined('THINK_PATH')) exit(); /*a:3:{s:48:"./application/admin/view3/tc\addEditTcMonth.html";i:1510821116;s:48:"./application/admin/view3/public\min-header.html";i:1510814014;s:48:"./application/admin/view3/public\breadcrumb.html";i:1509608949;}*/ ?>
 <!DOCTYPE html>
 <html>
   <head>
@@ -22,7 +22,7 @@
     <!-- jQuery 2.1.4 -->
     <script src="__PUBLIC__/plugins/jQuery/jQuery-2.1.4.min.js"></script>
 	<script src="__PUBLIC__/js/global.js"></script>
-    <script src="__PUBLIC__/js/myFormValidate.js"></script>    
+    <script src="__PUBLIC__/js/myFormValidate.js"></script>
     <script src="__PUBLIC__/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
     <script src="__PUBLIC__/js/layer/layer.js"></script><!-- 弹窗js 参考文档 http://layer.layui.com/-->
     <script src="__PUBLIC__/js/myAjax.js"></script>
@@ -109,7 +109,7 @@
     }
     </script>        
   </head>
-  <body style="background-color:#ecf0f5;">
+  <body  style="background-color:#ecf0f5;">
  
 
 <!--以下是在线编辑器 代码 -->
@@ -124,9 +124,11 @@
     }
     .first_ico{display: none}
     #goods_td{ padding-right: 0; padding-left: 0; }
-    table{ margin-bottom: 0; }
+    #goods_list_div .col-xs-10 table{ margin-bottom: 0; background-color: aliceblue;}
     .hidd{display: inline-block}
     .new_tab{display: table-cell}
+    #goodstotalshopprice,#goodstotalmarketprice{
+        display: inline-block; width: 30px;}
 </style>
 <script type="text/javascript">
     window.UEDITOR_Admin_URL = "/public/plugins/Ueditor/";
@@ -240,8 +242,8 @@
                                     <td>所属套餐:</td>
                                     <td>
                                       <div class="col-xs-3">
-                                      <select name="tc_id" id="cat_id" class="form-control" style="width:250px;margin-left:-15px;">
-                                        <option value="0">请选所属套餐</option>
+                                      <select name="tc_id" id="tc_id" class="form-control" style="width:250px;margin-left:-15px;">
+                                        <option value="">请选所属套餐</option>
                                              <?php if(is_array($tcInfo) || $tcInfo instanceof \think\Collection || $tcInfo instanceof \think\Paginator): if( count($tcInfo)==0 ) : echo "" ;else: foreach($tcInfo as $k=>$v): ?>
                                                <option value="<?php echo $v['tc_id']; ?>" <?php if($v['tc_id'] == $info['tc_id']): ?>selected="selected"<?php endif; ?> >
                                                		<?php echo $v['tc_name']; ?>
@@ -273,9 +275,9 @@
                                 <tr>
                                     <td>商品列表:</td>
                                     <td>
-                                            <div class="ncap-order-details" id="goods_list_div" style="display: none" >
+                                        <div class="ncap-order-details" id="goods_list_div" <?php if($info['tc_month_id'] == 0): ?>style="display: none" <?php else: ?>style="display: block"<?php endif; ?>>
 
-                                                        <div class="col-xs-10" id="goods_td" >
+                                        <div class="col-xs-10" id="goods_td" >
                                                             <table class="table table-bordered">
                                                                 <thead>
                                                                 <th align="left" abbr="order_sn" axis="col3" class="">
@@ -292,6 +294,35 @@
                                                                 </th>
                                                                 <th align="left" abbr="consignee" axis="col4" class="">
                                                                     <div style="text-align: center; width: 60px;" class="">操作</div>
+                                                                </th>
+
+                                                                </tr>
+                                                                </thead>
+                                                                <?php echo $info['goods_html']; ?>
+                                                            </table>
+                                                            <table class="table table-bordered">
+                                                                <thead>
+                                                                
+                                                                <th align="left"  axis="col4" class="">
+                                                                    <div style="text-align: center; width: 80px;" class="">本店总价：</div>
+                                                                </th>
+                                                                <th align="left"  axis="col4" class="">
+                                                                    <div style="text-align: left; width: 80px;" class="">
+                                                                        <input type="text" id="goodsTotalShopPrice" name="goodsTotalShopPrice" value="">
+                                                                    </div>
+                                                                </th>
+                                                                <th align="left"  axis="col4" class="">
+                                                                    <div style="text-align: center; width: 80px;" class="">市场总价：</div>
+                                                                </th>
+                                                                <th align="left"  axis="col4" class="">
+                                                                    <div style="text-align: left; width: 80px;" class="">
+                                                                        <input type="text" id="goodsTotalMarketPrice" name="goodsTotalMarketPrice" value="">
+                                                                    </div>
+                                                                </th>
+                                                                <th align="left"  axis="col4" class="">
+                                                                    <div style="text-align: center; width: 60px;" class="">
+                                                                        <a href="javascript:;" onclick="getGoodsTotal()" >刷新</a>
+                                                                    </div>
                                                                 </th>
 
                                                                 </tr>
@@ -322,7 +353,7 @@
                         <!-- 商品相册-->
                     </div>
                     <div class="pull-right">
-                        <input type="hidden" name="goods_id" value="<?php echo $info['tc_month_id']; ?>">
+                        <input type="hidden" name="tc_month_id" value="<?php echo $info['tc_month_id']; ?>">
                         <input type="hidden" name="__token__" value="<?php echo \think\Request::instance()->token(); ?>" />                        
                         <button class="btn btn-primary" onclick="ajax_submit_form('addEditTcMonthForm','<?php echo U('Tc/addEditTcMonth?is_ajax=1'); ?>');" title="" data-toggle="tooltip" type="button" data-original-title="保存">保存</button>
                     </div>
@@ -353,12 +384,22 @@
         $('#goods_td').find('.table-bordered').append(table_html);
 
         //过滤选择重复商品
+        var new_arr = [];
+        $('input[name="goods_id_c"]').each(function(i,o){
+            var items = $(o).val();
+            if($.inArray(items,new_arr)==-1) {
+                new_arr.push(items);
+            }else{
+                $(o).parent().parent().remove();
+            }
+        });
         layer.closeAll('iframe');
         $(".n_showbtn").show();
     }
+    //计算商品价格
+    function getGoodsTotal() {
 
-
-
+    }
 </script>
 </body>
 </html>

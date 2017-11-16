@@ -220,10 +220,6 @@ function getMenuList($act_list){
 
 function getAllMenu(){
     return	array(
-        'system' => array('name'=>'系统设置','icon'=>'fa-cog','sub_menu'=>array(
-            array('name' => '管理员日志', 'act'=>'log', 'control'=>'Admin'),
-            array('name' => '插件列表', 'act'=>'index', 'control'=>'Plugin'),
-        )),
         'tc' => array('name'=>'套餐管理','icon'=>'fa-tc','sub_menu'=>array(
             array('name' => '套餐商品','act'=>'tcGoodsList','control'=>'Tc'),
             array('name' => '商品分类','act'=>'tcGoodsCategory','control'=>'Tc'),
@@ -234,16 +230,7 @@ function getAllMenu(){
             array('name'=>'会员列表','act'=>'index','control'=>'User'),
             array('name'=>'会员等级','act'=>'levelList','control'=>'User'),
         )),
-        'goods' => array('name' => '商品管理', 'icon'=>'fa-book', 'sub_menu' => array(
-            array('name' => '商品分类', 'act'=>'categoryList', 'control'=>'Goods'),
-            array('name' => '商品列表', 'act'=>'goodsList', 'control'=>'Goods'),
-            array('name' => '商品模型', 'act'=>'goodsTypeList', 'control'=>'Goods'),
-            array('name' => '商品规格', 'act' =>'specList', 'control' => 'Goods'),
-            array('name' => '商品属性', 'act'=>'goodsAttributeList', 'control'=>'Goods'),
-            array('name' => '品牌列表', 'act'=>'brandList', 'control'=>'Goods'),
-            array('name' => '商品评论','act'=>'index','control'=>'Comment'),
-            array('name' => '商品咨询','act'=>'ask_list','control'=>'Comment'),
-        )),
+
         'order' => array('name' => '订单管理', 'icon'=>'fa-money', 'sub_menu' => array(
             array('name' => '订单列表', 'act'=>'index', 'control'=>'Order'),
             array('name' => '发货单', 'act'=>'delivery_list', 'control'=>'Order'),
@@ -252,14 +239,7 @@ function getAllMenu(){
             array('name' => '添加订单', 'act'=>'add_order', 'control'=>'Order'),
             array('name' => '订单日志', 'act'=>'order_log', 'control'=>'Order'),
         )),
-        'promotion' => array('name' => '促销管理', 'icon'=>'fa-bell', 'sub_menu' => array(
-            array('name' => '抢购管理', 'act'=>'flash_sale', 'control'=>'Promotion'),
-            array('name' => '团购管理', 'act'=>'group_buy_list', 'control'=>'Promotion'),
-            array('name' => '商品促销', 'act'=>'prom_goods_list', 'control'=>'Promotion'),
-            array('name' => '订单促销', 'act'=>'prom_order_list', 'control'=>'Promotion'),
-            array('name' => '代金券管理','act'=>'index', 'control'=>'Coupon'),
-            array('name' => '预售管理','act'=>'pre_sell_list', 'control'=>'Promotion'),
-        )),
+
         'Ad' => array('name' => '广告管理', 'icon'=>'fa-flag', 'sub_menu' => array(
             array('name' => '广告列表', 'act'=>'adList', 'control'=>'Ad'),
             array('name' => '广告位置', 'act'=>'positionList', 'control'=>'Ad'),
@@ -271,14 +251,7 @@ function getAllMenu(){
             //array('name' => '公告管理', 'act'=>'notice_list', 'control'=>'Article'),
             array('name' => '专题列表', 'act'=>'topicList', 'control'=>'Topic'),
         )),
-        'weixin' => array('name' => '微信管理', 'icon'=>'fa-weixin', 'sub_menu' => array(
-            array('name' => '公众号管理', 'act'=>'index', 'control'=>'Wechat'),
-            array('name' => '微信菜单管理', 'act'=>'menu', 'control'=>'Wechat'),
-            array('name' => '文本回复', 'act'=>'text', 'control'=>'Wechat'),
-            array('name' => '图文回复', 'act'=>'img', 'control'=>'Wechat'),
-            //array('name' => '组合回复', 'act'=>'nes', 'control'=>'Wechat'),
-            //array('name' => '消息推送', 'act'=>'news', 'control'=>'Wechat'),
-        )),
+
         'count' => array('name' => '统计报表', 'icon'=>'fa-signal', 'sub_menu' => array(
             array('name' => '销售概况', 'act'=>'index', 'control'=>'Report'),
             array('name' => '销售排行', 'act'=>'saleTop', 'control'=>'Report'),
@@ -287,10 +260,7 @@ function getAllMenu(){
             array('name' => '会员统计', 'act'=>'user', 'control'=>'Report'),
             array('name' => '财务统计', 'act'=>'finance', 'control'=>'Report'),
         )),
-        'pickup' => array('name' => '自提点管理', 'icon'=>'fa-anchor', 'sub_menu' => array(
-            array('name' => '自提点列表', 'act'=>'index', 'control'=>'Pickup'),
-            array('name' => '添加自提点', 'act'=>'add', 'control'=>'Pickup'),
-        ))
+
     );
     /*return	array(
         'system' => array('name'=>'系统设置','icon'=>'fa-cog','sub_menu'=>array(

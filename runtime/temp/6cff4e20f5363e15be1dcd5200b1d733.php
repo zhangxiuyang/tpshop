@@ -1,4 +1,4 @@
-<?php if (!defined('THINK_PATH')) exit(); /*a:3:{s:45:"./application/admin/view3/tc\tcMonthList.html";i:1510718437;s:48:"./application/admin/view3/public\min-header.html";i:1510128324;s:48:"./application/admin/view3/public\breadcrumb.html";i:1509608949;}*/ ?>
+<?php if (!defined('THINK_PATH')) exit(); /*a:3:{s:45:"./application/admin/view3/tc\tcMonthList.html";i:1510806550;s:48:"./application/admin/view3/public\min-header.html";i:1510814014;s:48:"./application/admin/view3/public\breadcrumb.html";i:1509608949;}*/ ?>
 <!DOCTYPE html>
 <html>
   <head>
@@ -22,7 +22,7 @@
     <!-- jQuery 2.1.4 -->
     <script src="__PUBLIC__/plugins/jQuery/jQuery-2.1.4.min.js"></script>
 	<script src="__PUBLIC__/js/global.js"></script>
-    <script src="__PUBLIC__/js/myFormValidate.js"></script>    
+    <script src="__PUBLIC__/js/myFormValidate.js"></script>
     <script src="__PUBLIC__/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
     <script src="__PUBLIC__/js/layer/layer.js"></script><!-- 弹窗js 参考文档 http://layer.layui.com/-->
     <script src="__PUBLIC__/js/myAjax.js"></script>
@@ -109,7 +109,7 @@
     }
     </script>        
   </head>
-  <body style="background-color:#ecf0f5;">
+  <body  style="background-color:#ecf0f5;">
  
 
 <style>thead tr .sorting{text-align:center;}</style>
@@ -130,14 +130,15 @@
 	    			</nav>              
 	             </div>	    
 	             <!-- /.box-header -->
-	             <div class="box-body">	             
+	             <div class="box-body">
 	           		<div class="row">
 	            	<div class="col-sm-12">
 		              <table id="list-table" class="table table-bordered table-striped dataTable" role="grid" aria-describedby="example1_info">
 		                 <thead>
 		                   <tr role="row" align="center">
 			                   <th class="sorting" tabindex="0">名称</th>
-			                   <th class="sorting" tabindex="0">最后修改时间</th>
+							   <th class="sorting" tabindex="0">创建时间</th>
+							   <th class="sorting" tabindex="0">最后修改时间</th>
 			                   <th class="sorting" tabindex="0">状态</th>
 			                   <th class="sorting" tabindex="0">操作</th>
 		                   </tr>
@@ -145,14 +146,14 @@
 						<tbody>
 						  <?php if(is_array($info) || $info instanceof \think\Collection || $info instanceof \think\Paginator): if( count($info)==0 ) : echo "" ;else: foreach($info as $k=>$vo): ?>
 						  	<tr role="row" align="center">
-		                     <td><?php echo $vo['tc_name']; ?></td>
-		                     <td><?php echo date('Y-m-d H:i',$vo['last_time']); ?></td>
+		                     <td><?php echo $vo['tc_month_name']; ?></td>
+								<td><?php echo date('Y-m-d H:i',$vo['tc_month_time']); ?></td>
+								<td><?php echo date('Y-m-d H:i',$vo['last_time']); ?></td>
 		                     <td>
-								 <input type="checkbox" name="zzz" lay-skin="switch" onclick="changeTableVal('tc','tc_id','<?php echo $vo['tc_id']; ?>','tc_status',this)" lay-text="开启|关闭">
-
+								 <img width="20" height="20" src="__PUBLIC__/images/<?php if($vo[tc_status] == 1): ?>yes.png<?php else: ?>cancel.png<?php endif; ?>" onclick="changeTableVal('tc_month','tc_month_id','<?php echo $vo['tc_month_id']; ?>','tc_status',this)">
 							 </td>
 		                     <td>
-								<a class="btn btn-primary my-full" href="<?php echo U('Tc/addEditTcMonth',array('tc_month_id'=>$vo['tc_month_id'])); ?>"><i class="fa fa-pencil"></i></a>
+								<a class="btn btn-primary my-full" href="<?php echo U('Tc/addEditTcMonth',array('tc_id'=>$vo['tc_id'],'tc_month_id'=>$vo['tc_month_id'])); ?>"><i class="fa fa-pencil"></i></a>
 		                      	<a class="btn btn-danger" href="javascript:void(0)" data-url="<?php echo U('Tc/delTcMonth'); ?>" data-id="<?php echo $vo['tc_month_id']; ?>" onclick="delfunc(this)"><i class="fa fa-trash-o"></i></a>
 							</td>
 		                   </tr>
@@ -164,7 +165,6 @@
 		               </table>
 	               </div>
 	          </div>
-					 <input type="button" onclick="dd()">
               <div class="row">
               	    <div class="col-sm-6 text-left"></div>
                     <div class="col-sm-6 text-right"><?php echo $page; ?></div>		

@@ -462,10 +462,73 @@ class Tc extends Base{
             //检查 套餐 月 id 是否存在
             if(I('GET.tc_month_id', 0)>0){
                 $info = M('TcMonth')->where('tc_month_id=' . I('GET.tc_month_id', 0))->find();
+            }else{
+                $info['tc_id'] = $tcId;
             }
             if(!isset($info['tc_status'])){
                 $info['tc_status'] = 1;//初始化 'tc_status'
             }
+            //加载 商品 信息
+            $str = '';
+            if(isset($info['goods_list_default'])){
+                $goods_list = json_decode($info['goods_list_default']);
+                $goods_list_keys = array();
+                foreach ($goods_list as $k=>$v){
+                    $goods_list_keys []= $k;
+                }
+//                die(var_dump($goods_list_keys));
+                $where['goods_id'] = array('in',$goods_list_keys);
+                $tcGoods = DB::name('tc_goods')->where($where)->field('goods_id,goods_name,market_price,shop_price')->select();
+
+               foreach ($tcGoods as $k=>$v){
+
+                   $str .= '<tr date-id="'.$v['goods_id'].'" class="trSelected">
+	              <td class="sign first_ico" axis="col0">
+	                <div style="width: 24px;"><i class="ico-check"></i></div>
+                    <input type="hidden" name="goods_id_c" value="'.$v['goods_id'].'">
+	              </td>
+	              <td align="left" abbr="order_sn" axis="col3" class="">
+	                <div style="text-align: left; width: 400px;" class="">'.$v['goods_name'].'</div>
+
+	              </td>
+	              <td align="left" abbr="consignee" axis="col4" class="">
+	                <div style="text-align: right; width: 80px;" class="">'.$v['shop_price'].'</div>
+	              </td>
+	              <td align="center" abbr="article_show" axis="col5" class="">
+	                <div style="text-align: right; width: 80px;" class="">'.$v['market_price'].'</div>
+	              </td>
+                  <td align="center" abbr="article_show" axis="col5" class="" style="">
+                    <div style="text-align: center; width: 60px;" class="">
+                        
+                    <input type="number" name="goods_id['.$v['goods_id'].'][goods_num]" min="1" max="999" maxlength="3" value="'.$goods_list->$v['goods_id']->goods_num.'"></div>
+                  </td>
+
+
+            <td><a class="btn red " href="javascript:void(0);" onclick="javascript:$(this).parent().parent().remove();">删除</a></td></tr>';
+
+                   /*$str .= '<td class="sign first_ico" axis="col0">';
+                   $str .= '<div style="width: 24px;"><i class="ico-check"></i></div>';
+                   $str .= '<input type="hidden" name="goods_id_c" value="'.$v['goods_id'].'" />';
+	               $str .= '</td>';
+                   $str .= '<td align="left" abbr="order_sn" axis="col3" class="">';
+                   $str .= '<div style="text-align: left; width: 400px;" class="">'.$v['goods_name'].'</div>';
+                   $str .= '</td>';
+                   $str .= '<td align="left" abbr="consignee" axis="col4" class="">';
+                   $str .= '<div style="text-align: right; width: 80px;" class="">'.$v['shop_price'].'</div>';
+                   $str .= '</td>';
+                   $str .= '<td align="center" abbr="article_show" axis="col5" class="">';
+                   $str .= '<div style="text-align: right; width: 80px;" class="">'.$v['market_price'].'</div>';
+                   $str .= '</td>';
+                   $str .= '<td align="center" abbr="article_show" axis="col5" class="" style="display:none;" >';
+                   $str .= '<div style="text-align: center; width: 60px;" class=""   >';
+                   $str .= '<input type="checkbox" data-goods-id="'.$v['goods_id'].'" style="display:none;" />';
+                   $str .= '</div></td></tr>';*/
+                }
+
+
+            }
+
+            $info['goods_html'] = $str;
             //获取 所属 父 套餐 列表
             $tcInfo = M('Tc')->select();
             $this->assign('tcInfo',$tcInfo);
@@ -475,8 +538,50 @@ class Tc extends Base{
         }
 
         //提交 保存
+        $type = I('tc_id') > 0 ? 2 : 1; // 标识自动验证时的 场景 1 表示插入 2 表示更新
         if(IS_POST){
 
+        }
+
+
+        $type = I('tc_month_id') > 0 ? 2 : 1; // 标识自动验证时的 场景 1 表示插入 2 表示更新
+        if(IS_POST) {
+            // 数据验证
+            $data = input('post.');
+            $validate = \think\Loader::validate('TcMonth');
+
+            if (!$validate->batch()->check($data)) {
+                $error = $validate->getError();
+                $error_msg = array_values($error);
+                $return_arr = array(
+                    'status' => 0,
+                    'msg'   => $error_msg[0],
+                    'data'  => '',
+                );
+                $this->ajaxReturn($return_arr);
+            } else {
+                $data['goods_list_default'] = json_encode($data['goods_id']);
+                unset($data['goods_id']);
+                if ($type == 2)
+                {
+                    $data['last_time'] = time();
+
+                    M("TcMonth")->update($data);
+                }
+                else
+                {
+                    $data['tc_time'] = time();
+                    $data['last_time'] = time();
+                    M("TcMonth")->insert($data);
+                }
+
+                $return_arr = array(
+                    'status' => 1,
+                    'msg'   => '操作成功',
+                    'data'  => array('url' => U('admin/Tc/tcMonthList',array('tc_id'=>I('tc_id')))),
+                );
+                $this->ajaxReturn($return_arr);
+            }
         }
 
     }

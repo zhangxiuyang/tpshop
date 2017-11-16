@@ -1,4 +1,4 @@
-<?php if (!defined('THINK_PATH')) exit(); /*a:3:{s:44:"./application/admin/view3/index\welcome.html";i:1509608864;s:48:"./application/admin/view3/public\min-header.html";i:1510128324;s:48:"./application/admin/view3/public\breadcrumb.html";i:1509608949;}*/ ?>
+<?php if (!defined('THINK_PATH')) exit(); /*a:3:{s:44:"./application/admin/view3/index\welcome.html";i:1509608864;s:48:"./application/admin/view3/public\min-header.html";i:1510814014;s:48:"./application/admin/view3/public\breadcrumb.html";i:1509608949;}*/ ?>
 <!DOCTYPE html>
 <html>
   <head>
@@ -22,7 +22,7 @@
     <!-- jQuery 2.1.4 -->
     <script src="__PUBLIC__/plugins/jQuery/jQuery-2.1.4.min.js"></script>
 	<script src="__PUBLIC__/js/global.js"></script>
-    <script src="__PUBLIC__/js/myFormValidate.js"></script>    
+    <script src="__PUBLIC__/js/myFormValidate.js"></script>
     <script src="__PUBLIC__/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
     <script src="__PUBLIC__/js/layer/layer.js"></script><!-- 弹窗js 参考文档 http://layer.layui.com/-->
     <script src="__PUBLIC__/js/myAjax.js"></script>
@@ -109,7 +109,7 @@
     }
     </script>        
   </head>
-  <body style="background-color:#ecf0f5;">
+  <body  style="background-color:#ecf0f5;">
  
 
 <div class="wrapper">

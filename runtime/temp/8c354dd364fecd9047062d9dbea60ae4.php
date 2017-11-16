@@ -1,4 +1,4 @@
-<?php if (!defined('THINK_PATH')) exit(); /*a:2:{s:46:"./application/admin/view3/tc\search_goods.html";i:1510733138;s:44:"./application/admin/view3/public\layout.html";i:1503927232;}*/ ?>
+<?php if (!defined('THINK_PATH')) exit(); /*a:2:{s:46:"./application/admin/view3/tc\search_goods.html";i:1510803788;s:44:"./application/admin/view3/public\layout.html";i:1503927232;}*/ ?>
 <!doctype html>
 <html>
 <head>
@@ -193,10 +193,11 @@
 			<tr date-id="<?php echo $list['goods_id']; ?>">
 	              <td class="sign first_ico" axis="col0">
 	                <div style="width: 24px;"><i class="ico-check"></i></div>
-
+                    <input type="hidden" name="goods_id_c" value="<?php echo $list['goods_id']; ?>" />
 	              </td>
 	              <td align="left" abbr="order_sn" axis="col3" class="">
 	                <div style="text-align: left; width: 400px;" class=""><?php echo getSubstr($list['goods_name'],0,36); ?></div>
+
 	              </td>
 	              <td align="left" abbr="consignee" axis="col4" class="">
 	                <div style="text-align: right; width: 80px;" class=""><?php echo $list[shop_price]; ?></div>
@@ -206,7 +207,7 @@
 	              </td>
                   <td align="center" abbr="article_show" axis="col5" class="" style="display:none;" >
                     <div style="text-align: center; width: 60px;" class=""   >
-                        <input type="checkbox" style="display:none;" />
+                        <input type="checkbox" data-goods-id="<?php echo $list['goods_id']; ?>" style="display:none;" />
                     </div>
                   </td>
 
@@ -272,13 +273,13 @@ function select_goods()
 		   }
 		   $(this).parent().parent().show();
 		   $(this).siblings().show();
-           $(this).parent().append("<input type='number' name='num' min='1' max='999' maxlength='3' value='1'>");
+           $(this).parent().append("<input type='number' name='goods_id["+$(this).attr('data-goods-id')+"][goods_num]'  min='1' max='999' maxlength='3' value='1'>");
            $(this).parent().parent().parent().append('<td><a class="btn red " href="javascript:void(0);" onclick="javascript:$(this).parent().parent().remove();">删除</a></td>');
            $(this).remove();
 	    });
 		$(".btn-info").remove();
 		var tabHtml = $('#goos_table').html();
-     alert(tabHtml);
+
 		 javascript:window.parent.call_back(tabHtml);
 }    
 </script>
