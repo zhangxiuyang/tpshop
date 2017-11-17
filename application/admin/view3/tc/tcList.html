@@ -24,6 +24,7 @@
 		                   <tr role="row">
 			                   <th class="sorting" tabindex="0">ID</th>
 			                   <th class="sorting" tabindex="0">名称</th>
+			                   <th class="sorting" tabindex="0">价格</th>
 			                   <th class="sorting" tabindex="0">创建时间</th>
 			                   <th class="sorting" tabindex="0">最后修改时间</th>
 			                   <th class="sorting" tabindex="0">状态</th>
@@ -34,7 +35,8 @@
 						  <foreach name="info" item="vo" key="k" >
 						  	<tr role="row" align="center">
 		                     <td>{$vo.tc_id}</td>
-		                     <td>{$vo.tc_name}</td>
+							 <td>{$vo.tc_name}</td>
+							 <td>{$vo.price}</td>
 		                     <td>{$vo.tc_time|date='Y-m-d H:i',###}</td>
 		                     <td>{$vo.last_time|date='Y-m-d H:i',###}</td>
 		                     <td>

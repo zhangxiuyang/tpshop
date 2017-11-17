@@ -93,7 +93,7 @@
 	              </td>
                   <td align="center" abbr="article_show" axis="col5" class="" style="display:none;" >
                     <div style="text-align: center; width: 60px;" class=""   >
-                        <input type="checkbox" data-goods-id="{$list.goods_id}" style="display:none;" />
+                        <input type="checkbox" data-goods-id="{$list.goods_id}" style="display:none;" data-shop_price="{$list[shop_price]}" data-market_price="{$list[market_price]}"  />
                     </div>
                   </td>
 
@@ -159,7 +159,8 @@ function select_goods()
 		   }
 		   $(this).parent().parent().show();
 		   $(this).siblings().show();
-           $(this).parent().append("<input type='number' name='goods_id["+$(this).attr('data-goods-id')+"][goods_num]'  min='1' max='999' maxlength='3' value='1'>");
+           $(this).parent().append('<input type="number" class="goods_num" name="goods_id['+$(this).attr('data-goods-id')+'][goods_num]" min="1" max="999" oninput="if(value.length>3)value=value.slice(0,3)" maxlength="3" data-shop_price="'+$(this).attr('data-shop_price')+'" data-market_price="'+$(this).attr('data-market_price')+'" onchange="getGoodsTotal()" value="1">'
+           );
            $(this).parent().parent().parent().append('<td><a class="btn red " href="javascript:void(0);" onclick="javascript:$(this).parent().parent().remove();">删除</a></td>');
            $(this).remove();
 	    });

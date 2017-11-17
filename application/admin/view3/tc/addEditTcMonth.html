@@ -14,8 +14,8 @@
     #goods_list_div .col-xs-10 table{ margin-bottom: 0; background-color: aliceblue;}
     .hidd{display: inline-block}
     .new_tab{display: table-cell}
-    #goodstotalshopprice,#goodstotalmarketprice{
-        display: inline-block; width: 30px; }
+    #goodsTotalShopPrice,#goodsTotalMarketPrice{
+        display: inline-block;  padding-right: 6px;}
 </style>
 <script type="text/javascript">
     window.UEDITOR_Admin_URL = "/public/plugins/Ueditor/";
@@ -163,7 +163,7 @@
                                     <td>
                                         <div class="ncap-order-details" id="goods_list_div" <if condition="$info['tc_month_id'] eq 0">style="display: none" <else />style="display: block"</if>>
 
-                                        <div class="col-xs-10" id="goods_td" >
+                                        <div class="col-xs-10" id="goods_td" style="width: 100%" >
                                                             <table class="table table-bordered">
                                                                 <thead>
                                                                 <th align="left" abbr="order_sn" axis="col3" class="">
@@ -186,28 +186,25 @@
                                                                 </thead>
                                                                 {$info['goods_html']}
                                                             </table>
-                                                            <table class="table table-bordered">
+                                                            <table class="table table-bordered" width="100%" style="background-color: #5c9ebf">
                                                                 <thead>
 
-                                                                <th align="left"  axis="col4" class="">
-                                                                    <div style="text-align: center; width: 80px;" class="">本店总价：</div>
+                                                                <th align="right" width="120px"  axis="col4" class="">
+                                                                    本店总价：
                                                                 </th>
-                                                                <th align="left"  axis="col4" class="">
-                                                                    <div style="text-align: left; width: 80px;" class="">
-                                                                        <span id="goodsTotalShopPrice" name="goodsTotalShopPrice" ></span>
-                                                                    </div>
+                                                                <th align=""  width="140px" axis="col4" class="">
+                                                                    <span id="goodsTotalShopPrice">0.00</span>元
                                                                 </th>
-                                                                <th align="left"  axis="col4" class="">
-                                                                    <div style="text-align: center; width: 80px;" class="">市场总价：</div>
+                                                                <th align="right" width="120px"  axis="col4" class="">
+                                                                    市场总价：
                                                                 </th>
-                                                                <th align="left"  axis="col4" class="">
-                                                                    <div style="text-align: left; width: 80px;" class="">
-                                                                        <span type="text" id="goodsTotalMarketPrice" ></span>
-                                                                    </div>
+                                                                <th align="" width="140px" axis="col4" class="">
+                                                                    <span id="goodsTotalMarketPrice">0.00</span>元
                                                                 </th>
-                                                                <th align="left"  axis="col4" class="">
-                                                                    <div style="text-align: center; width: 60px;" class="">
-                                                                        <a href="javascript:;" onclick="getGoodsTotal()" >刷新</a>
+
+                                                                <th align="right"  axis="col4" class="">
+                                                                    <div style="text-align: center; width: 80px; color: #ffffff;" class="" >
+                                                                        <a style="color: #ffffff;" href="javascript:;" onclick="getGoodsTotal()" >刷新</a>
                                                                     </div>
                                                                 </th>
 
@@ -281,11 +278,28 @@
         });
         layer.closeAll('iframe');
         $(".n_showbtn").show();
+        getGoodsTotal();
     }
     //计算商品价格
     function getGoodsTotal() {
+        var goods_num_info = $(".goods_num");
 
+        var shop_price_total = 0;
+        var market_price_total = 0;
+        if(goods_num_info.length>0){
+            goods_num_info.each(function (i,o) {
+                shop_price_total += parseFloat(o.value)*parseFloat($(o).attr('data-shop_price'));
+                market_price_total += parseInt(o.value)*parseFloat($(o).attr('data-market_price'));
+                //alert(market_price_total);
+            });
+
+        }
+        $("#goodsTotalShopPrice").html((shop_price_total));
+        $("#goodsTotalMarketPrice").html((market_price_total));
     }
+    $(function () {
+        getGoodsTotal();
+    });
 </script>
 </body>
 </html>

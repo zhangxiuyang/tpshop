@@ -188,6 +188,10 @@ class Tc extends Base{
                 $return = array('status'=>0,'msg'=>'操作失败','result'=>$brandVilidate->getError());
                 $this->ajaxReturn($return);
             }
+            //排序 默认 50
+            if($data['sort']==''){
+                $data['sort']='50';
+            }
             if($id){
                 M("Brand")->update($data);
             }else{
@@ -500,7 +504,7 @@ class Tc extends Base{
                   <td align="center" abbr="article_show" axis="col5" class="" style="">
                     <div style="text-align: center; width: 60px;" class="">
                         
-                    <input type="number" name="goods_id['.$v['goods_id'].'][goods_num]" min="1" max="999" maxlength="3" value="'.$goods_list->$v['goods_id']->goods_num.'"></div>
+                    <input type="number" class="goods_num" name="goods_id['.$v['goods_id'].'][goods_num]" min="1" max="999" oninput="if(value.length>3)value=value.slice(0,3)" maxlength="3" data-shop_price="'.$v['shop_price'].'" data-market_price="'.$v['market_price'].'"  onchange="getGoodsTotal()"  value="'.$goods_list->$v['goods_id']->goods_num.'"></div>
                   </td>
 
 
