@@ -356,6 +356,10 @@ class Tc extends Base{
      */
     public function tcList(){
         $info = DB::name('tc')->select();
+        if(is_array($info) && count($info)>0){
+            $info = marketGoodsTotalPrice($info);
+        }
+
         $this->assign("info",$info);
         return $this->fetch();
     }
@@ -574,7 +578,7 @@ class Tc extends Base{
                 }
                 else
                 {
-                    $data['tc_time'] = time();
+                    $data['tc_month_time'] = time();
                     $data['last_time'] = time();
                     M("TcMonth")->insert($data);
                 }

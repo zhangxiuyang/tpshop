@@ -95,7 +95,7 @@ class Activity extends MobileBase {
         $where = " start_time <= $now_time and end_time >= $now_time ";
         $count = M('prom_goods')->where($where)->count();  // 查询满足要求的总记录数
         $pagesize = C('PAGESIZE');  //每页显示数
-        $Page  = new Page($count,$pagesize); //分页类
+        $Page  = new Page($count,1); //分页类
         $promote = M('prom_goods')->field('id,title,start_time,end_time,prom_img')->where($where)->limit($Page->firstRow.','.$Page->listRows)->select();    //查询活动列表
         $this->assign('promote',$promote);
         if(I('is_ajax')){

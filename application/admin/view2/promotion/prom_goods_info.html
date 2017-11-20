@@ -246,9 +246,12 @@
     }
     function call_back(goodsItem){
         var html = '';
-        $.each(goodsItem, function (index, item) {
+        var item = goodsItem;
+        //alert(goodsItem.goods_id);
+        //$.each(goodsItem, function (index, item) {
+
             if (item.goods_id != 'on') {
-                if (item.spec != null) {
+                /*if (item.spec != null) {
                     //有规格
                     $.each(item.spec, function (i, o) {
                         html += '<div style="float: left;margin-right: 20px"><div class="ys-btn-close" style="top: 15px;left: 172px;">×</div>' +
@@ -259,16 +262,16 @@
                                 '<a target="_blank" href="/index.php?m=Home&c=Goods&a=goodsInfo&id=' + item.goods_id + '">' + item.goods_name + o.key_name + '</a> </div>' +
                                 ' <div class="goods-price">商城价：￥' + o.price + '库存:' + o.store_count + '</div> </div></div>';
                     });
-                } else {
+                } else {*/
                     html += '<div style="float: left;margin-right: 20px"><div class="ys-btn-close" style="top: 15px;left: 172px;">×</div>' +
                             '<input type="hidden" name="goods[' + item.goods_id + '][goods_id]" value="' + item.goods_id + '"/>' +
                             '<div class="selected-group-goods"><div class="goods-thumb">' +
                             '<img style="width: 162px;height: 162px" src="' + item.goods_image + '"/></div> <div class="goods-name"> ' +
                             '<a target="_blank" href="/index.php?m=Home&c=Goods&a=goodsInfo&id=' + item.goods_id + '">' + item.goods_name + '</a> </div>' +
                             ' <div class="goods-price">商城价：￥' + item.goods_price + '库存:' + item.store_count + '</div> </div></div>';
-                }
+               // }
             }
-        });
+        //});
         $('#selected_group_goods').append(html);
         layer.closeAll('iframe');
     }

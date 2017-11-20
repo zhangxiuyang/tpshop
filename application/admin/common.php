@@ -260,6 +260,14 @@ function getAllMenu(){
             array('name' => '会员统计', 'act'=>'user', 'control'=>'Report'),
             array('name' => '财务统计', 'act'=>'finance', 'control'=>'Report'),
         )),
+        'promotion' => array('name' => '促销管理', 'icon'=>'fa-bell', 'sub_menu' => array(
+            array('name' => '抢购管理', 'act'=>'flash_sale', 'control'=>'Promotion'),
+            array('name' => '团购管理', 'act'=>'group_buy_list', 'control'=>'Promotion'),
+            array('name' => '商品促销', 'act'=>'prom_goods_list', 'control'=>'Promotion'),
+            array('name' => '订单促销', 'act'=>'prom_order_list', 'control'=>'Promotion'),
+            array('name' => '代金券管理','act'=>'index', 'control'=>'Coupon'),
+            array('name' => '预售管理','act'=>'pre_sell_list', 'control'=>'Promotion'),
+        )),
 
     );
     /*return	array(
