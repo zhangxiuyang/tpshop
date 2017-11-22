@@ -1,0 +1,174 @@
+<include file="public/layout" />
+<script type="text/javascript" src="__ROOT__/public/static/js/layer/laydate/laydate.js"></script>
+<style>
+	body{min-width: 760px;}
+	.page{min-width: 750px;}
+    /*.new_tab{display: none}*/
+</style>
+<body style="background-color: rgb(255, 255, 255); overflow: auto; cursor: default; -moz-user-select: inherit;">
+<div id="append_parent"></div>
+<div id="ajaxwaitid"></div>
+<div class="page" style="padding:10px">
+  <div class="flexigrid" >
+    <div class="mDiv">
+      <div class="ftitle">
+        <h3>商品列表</h3>
+        <h5>(共{$totalSize}条记录)</h5>
+      </div>
+
+	  <form class="navbar-form form-inline"  method="post" action="{:U('Admin/Tc/search_goods')}"  name="search-form2" id="search-form2">
+      <div class="sDiv">
+        <div class="sDiv2">	 
+        	<select name="cat_id" id="cat_id" class="select">
+                 <option value="">所有分类</option>
+                 <foreach name="categoryList" item="v" key="k" >
+					<option value="{$v['id']}" <if condition="$v[id] eq $cat_id">selected</if> ><?php echo  str_pad('',($v[level] * 3),'-',STR_PAD_LEFT);  ?> {$v['name']}</option>
+				</foreach>
+             </select>
+        </div>
+        <div class="sDiv2">	   
+            <select name="brand_id" id="brand_id" class="select">
+                <option value="">所有品牌</option>
+                    <foreach name="brandList" item="v" key="k" >
+                       <option value="{$v['id']}" <if condition="$v[id] eq $brand_id">selected</if> >{$v['name']}</option>
+					</foreach>
+             </select>
+         </div>
+         <div class="sDiv2" style="border:0px">	 
+          <input type="text" name="keywords" value="{$keywords}" placeholder="搜索词" id="input-order-id" class="input-txt">
+        </div>
+        <div class="sDiv2" style="border:0px">	 
+          <input type="submit" class="btn" value="搜索">
+        </div>
+      </div>
+     </form>
+    </div>
+    <div class="hDiv">
+      <div class="hDivBox" id="ajax_return">
+        <table cellspacing="0" cellpadding="0" id="table_head" style="width: 100%">
+          <thead>
+	        	<tr>
+	              <th class="sign" axis="col0">
+	                <div style="width: 24px;">
+                        <!--<i class="ico-check"></i>-->
+                    </div>
+	              </th>
+	              <th align="left" abbr="order_sn" axis="col3" class="">
+	                <div style="text-align: left; width: 400px;" class="">商品名称</div>
+	              </th>
+                    <th align="left" abbr="consignee" axis="col4" class="">
+						<div style="text-align: center; width: 80px;" class="">本店价格</div>
+					</th>
+                    <th align="left" abbr="consignee" axis="col4" class="">
+                        <div style="text-align: center; width: 80px;" class="">市场价格</div>
+                    </th>
+
+
+	            </tr>
+	          </thead>
+        </table>
+      </div>
+    </div>
+    <div class="bDiv" style="height: auto;">
+      <div id="flexigrid" cellpadding="0" cellspacing="0" border="0">
+      <table cellspacing="0" cellpadding="0" id="goos_table">
+         <tbody>
+      	<volist name="goodsList" id="list">
+
+
+			<tr date-id="{$list.goods_id}">
+	              <td class="sign first_ico" axis="col0">
+	                <div style="width: 24px;"><i class="ico-check"></i></div>
+                    <input type="hidden" name="goods_id_c" value="{$list.goods_id}" />
+	              </td>
+	              <td align="left" abbr="order_sn" axis="col3" class="">
+	                <div style="text-align: left; width: 400px;" class="">{$list.goods_name|getSubstr=0,36}</div>
+
+	              </td>
+	              <td align="left" abbr="consignee" axis="col4" class="">
+	                <div style="text-align: right; width: 80px;" class="">{$list[shop_price]}</div>
+	              </td>
+	              <td align="center" abbr="article_show" axis="col5" class="">
+	                <div style="text-align: right; width: 80px;" class="">{$list[market_price]}</div>
+	              </td>
+                  <td align="center" abbr="article_show" axis="col5" class="" style="display:none;" >
+                    <div style="text-align: center; width: 60px;" class=""   >
+                        <input type="checkbox" data-goods-id="{$list.goods_id}" style="display:none;" data-shop_price="{$list[shop_price]}" data-market_price="{$list[market_price]}"  />
+                    </div>
+                  </td>
+
+
+            </tr>
+
+
+	    </volist>
+	    </tbody>
+	    </table>
+	    <div class="sDiv" style="float:left;margin-top:10px">
+        <div class="sDiv2" style="border:0px">
+			    <input type="button" onclick="select_goods()"  class="btn" value="确定">
+        </div>
+ </div>
+ 
+      </div>
+      <div class="iDiv" style="display: none;"></div>
+    </div>
+    <!--分页位置-->
+      {$page}
+   	</div>
+</div>
+<script type="text/javascript">
+
+$(document).ready(function(){	
+	
+	$('#flexigrid > table>tbody >tr').click(function(){
+	    $(this).toggleClass('trSelected');
+	    
+	    var checked = $(this).hasClass('trSelected');	
+		 $(this).find('input[type="checkbox"]').attr('checked',checked); 
+ 
+	});
+	
+	$('.ico-check ' , '.hDivBox').click(function(){
+		$('tr' ,'.hDivBox').toggleClass('trSelected' , function(index,currentclass){
+    		var hasClass = $(this).hasClass('trSelected');
+    		$('tr' , '#flexigrid').each(function(){
+    			if(hasClass){
+    				$(this).addClass('trSelected');
+    			}else{
+    				$(this).removeClass('trSelected');
+    			}
+    		});  
+    	});
+	});
+});
+ 
+	
+function select_goods()
+{
+	   if($("input[type='checkbox']:checked").length == 0)
+	   {
+		   layer.alert('请选择商品', {icon: 2}); //alert('请选择商品');
+		   return false;
+	   }
+	  // 将没选中的复选框所在的  tr  remove  然后删除复选框
+	    $("input[type='checkbox']").each(function(){
+		   if($(this).is(':checked') == false)
+		   {
+			    $(this).parent().parent().parent().remove();
+		   }
+		   $(this).parent().parent().show();
+		   $(this).siblings().show();
+           $(this).parent().append('<input type="number" class="goods_num" name="goods_id['+$(this).attr('data-goods-id')+'][goods_num]" min="1" max="999" oninput="if(value.length>3)value=value.slice(0,3)" maxlength="3" data-shop_price="'+$(this).attr('data-shop_price')+'" data-market_price="'+$(this).attr('data-market_price')+'" onchange="getGoodsTotal()" value="1">'
+           );
+           $(this).parent().parent().parent().append('<td><a class="btn red " href="javascript:void(0);" onclick="javascript:$(this).parent().parent().remove();">删除</a></td>');
+           $(this).remove();
+	    });
+		$(".btn-info").remove();
+		var tabHtml = $('#goos_table').html();
+
+		 javascript:window.parent.call_back(tabHtml);
+}    
+</script>
+</body>
+</html>

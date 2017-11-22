@@ -189,6 +189,7 @@
         var goodsItem = null;
         if(spec.length == 0){
             goodsItem = new GoodsItem(input.data('id'), input.data('name'),input.data('count'), input.data('price'), input.data('img'), null);
+           // alert(goodsItem.goods_id);
         }else{
             var spec_a = spec.find('.ncap-btn-green');
             if(spec_a.length == 0){

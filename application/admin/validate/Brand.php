@@ -28,8 +28,9 @@ class Brand extends validate
     protected function checkName($value,$rule,$data){
         $checkBrandWhere = [
             'name'=>$value,
-            'parent_cat_id'=>$data['parent_cat_id'],
-            'cat_id'=>$data['cat_id']
+//            'parent_cat_id'=>$data['parent_cat_id'],
+            'cat_id'=>$data['cat_id'],
+            'id'=>array('NEQ',$data['id'])
         ];
         $res = M('Brand')->where($checkBrandWhere)->getField('id');
         return !empty($res) ? false:true;

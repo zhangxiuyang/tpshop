@@ -210,6 +210,7 @@
 
   setup();
 
+
   /**
    * Toggles layout classes
    *
@@ -236,6 +237,7 @@
    * @returns Boolean false to prevent link's default action
    */
   function change_skin(cls) {
+
     $.each(my_skins, function (i) {
       $("body").removeClass(my_skins[i]);
     });
@@ -267,10 +269,12 @@
    * @returns String The value of the setting | null
    */
   function get(name) {
+
     if (typeof (Storage) !== "undefined") {
       return localStorage.getItem(name);
     } else {
       window.alert('Please use a modern browser to properly view this template!');
+      return 'skin-blue-light';
     }
   }
 
@@ -280,10 +284,14 @@
    * @returns void
    */
   function setup() {
-    var tmp = get('skin');
-    if (tmp && $.inArray(tmp, my_skins))
-      change_skin(tmp);
 
+    var tmp = get('skin');
+    if (tmp && $.inArray(tmp, my_skins)){
+        change_skin(tmp);
+    }else{
+        change_skin('skin-blue-light');
+    }
+    //alert(tmp);
     //Add the change skin listener
     $("[data-skin]").on('click', function (e) {
       e.preventDefault();

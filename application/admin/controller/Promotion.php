@@ -46,6 +46,7 @@ class Promotion extends Base
         $prom_list = $PromGoods->where('')->limit($Page->firstRow . ',' . $Page->listRows)->select();
         $this->assign('page',$Page);
         $this->assign('prom_list', $prom_list);
+        $this->assign('parse_type', config(PROM_TYPE));
         return $this->fetch();
     }
 

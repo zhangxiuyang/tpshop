@@ -453,6 +453,27 @@ function getCatGrandson ($cat_id)
 }
 
 /**
+ * 获取某个 套餐 商品分类的 儿子 孙子  重子重孙 的 id
+ * @param type $cat_id
+ */
+function getTcCatGrandson ($cat_id)
+{
+    $GLOBALS['tcCatGrandson'] = array();
+    $GLOBALS['tcCategory_id_arr'] = array();
+    // 先把自己的id 保存起来
+    $GLOBALS['tcCatGrandson'][] = $cat_id;
+    // 把整张表找出来
+    $GLOBALS['tcCategory_id_arr'] = M('TcGoodsCategory')->cache(true,TPSHOP_CACHE_TIME)->getField('id,parent_id');
+    // 先把所有儿子找出来
+    $son_id_arr = M('TcGoodsCategory')->where("parent_id", $cat_id)->cache(true,TPSHOP_CACHE_TIME)->getField('id',true);
+    foreach($son_id_arr as $k => $v)
+    {
+        getTcCatGrandson2($v);
+    }
+    return $GLOBALS['tcCatGrandson'];
+}
+
+/**
  * 获取某个文章分类的 儿子 孙子  重子重孙 的 id
  * @param type $cat_id
  */
@@ -486,6 +507,23 @@ function getCatGrandson2($cat_id)
         if($v == $cat_id)
         {
             getCatGrandson2($k); // 继续找孙子
+        }
+    }
+}
+
+/**
+ * 递归调用找到 重子重孙
+ * @param type $cat_id
+ */
+function getTcCatGrandson2($cat_id)
+{
+    $GLOBALS['tcCatGrandson'][] = $cat_id;
+    foreach($GLOBALS['tcCategory_id_arr'] as $k => $v)
+    {
+        // 找到孙子
+        if($v == $cat_id)
+        {
+            getTcCatGrandson2($k); // 继续找孙子
         }
     }
 }
