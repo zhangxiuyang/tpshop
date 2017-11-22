@@ -1,18 +1,20 @@
 <include file="public/header" title="套餐列表" />
 <include file="public/header_nav" title="套餐列表"  href="javascript:history.back(-1)"/>
+<style>
+    #goods_list{    /*background: url(http://img4.imgtn.bdimg.com/it/u=1931659373,3162792411&fm=27&gp=0.jpg) repeat;*/}
+    .cbaudience{height: 360px; background-color: #1e695e; text-align: center;  line-height: 360px;}
+    .cbaudience p{font-size: .8rem; color: #ffffff;letter-spacing: .2rem; text-align: left;line-height: 260px; padding-left: 140px;font-family:"楷体";}
+</style>
     <!--套餐列表-s-->
         <div id="goods_list">
             <foreach name="tc_list" item="list">
-                <a href="{:U('Tc/tc_info',array('id'=>$list[id]))}">
-                <div class="banner">
-                    <img src="{$list[prom_img]}"/>
-                </div>
-                <div class="cbaudience">
-                    <div class="maleri30">
-                        <p>{$list[tc_name]}</p>
+                <a href="{:U('Tc/tcInfo',array('id'=>$list[tc_id]))}">
+                    <div class="cbaudience">
+                            <p>{$list[tc_name]}</p>
                     </div>
-                </div>
                 </a>
+                <br>
+                <br>
             </foreach>
         </div>
     <!--套餐列表-e-->
@@ -26,7 +28,7 @@
     function ajax_sourch_submit()
     {
         ++page;
-        $.ajax({
+       /* $.ajax({
             type : "GET",
             url:"/index.php?m=Mobile&c=Activity&a=promote_goods&is_ajax=1&p="+page,
 //			data : $('#filter_form').serialize(),// 你的formid 搜索表单 序列化提交
@@ -37,7 +39,7 @@
                     $("#goods_list").append(data);
                 }
             }
-        });
+        });*/
     }
     //滚动加载更多
     $(window).scroll(
@@ -46,7 +48,7 @@
             var scrollHeight = $(document).height();
             var windowHeight = $(this).height();
             if (scrollTop + windowHeight == scrollHeight) {
-                ajax_sourch_submit();//调用加载更多
+               // ajax_sourch_submit();//调用加载更多
             }
         }
     );

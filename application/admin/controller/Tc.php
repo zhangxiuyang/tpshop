@@ -357,7 +357,8 @@ class Tc extends Base{
     public function tcList(){
         $info = DB::name('tc')->select();
         if(is_array($info) && count($info)>0){
-            $info = marketGoodsTotalPrice($info);
+            //计算各套餐下所属商品 总市场价
+            //$info = marketGoodsTotalPrice($info);
         }
 
         $this->assign("info",$info);

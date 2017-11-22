@@ -1,4 +1,4 @@
-<?php if (!defined('THINK_PATH')) exit(); /*a:3:{s:50:"./template/mobile/new2/activity\promote_goods.html";i:1503927242;s:41:"./template/mobile/new2/public\header.html";i:1503927242;s:45:"./template/mobile/new2/public\header_nav.html";i:1503927242;}*/ ?>
+<?php if (!defined('THINK_PATH')) exit(); /*a:3:{s:50:"./template/mobile/new2/activity\promote_goods.html";i:1503927242;s:41:"./template/mobile/new2/public\header.html";i:1503927242;s:45:"./template/mobile/new2/public\header_nav.html";i:1511227268;}*/ ?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -24,9 +24,9 @@
         <div class="ds-in-bl search center">
             <span>优惠活动</span>
         </div>
-        <div class="ds-in-bl menu">
+       <!-- <div class="ds-in-bl menu">
             <a href="javascript:void(0);"><img src="__STATIC__/images/class1.png" alt="菜单"></a>
-        </div>
+        </div>-->
     </div>
 </div>
 <div class="flool tpnavf">

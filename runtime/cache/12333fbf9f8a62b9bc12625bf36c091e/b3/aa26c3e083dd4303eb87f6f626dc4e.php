@@ -1,3 +1,0 @@
-<?php
-//000000000001{"site_url":"http:\/\/www.tp-shop.cn","record_no":"\u9ed112345678\u53f7","store_name":"\u5b9a\u5236\u9f99\u6c5f","store_logo":"\/public\/images\/newLogo.png","store_title":"\u5b9a\u5236\u9f99\u6c5f | DZLJ","store_desc":"\u9f99\u6c5f\u9ad8\u7aef\u7eff\u8272\u7279\u4ea7\u5b9a\u5236\u914d\u9001\u670d\u52a1","store_keyword":"\u5b9a\u5236\u9f99\u6c5f  DZLJ","contact":"","phone":"123456789","address":"\u9686\u987a\u8857\u4e94\u53f7","qq":"123456789","qq2":"123456789","qq3":"123456789","mobile":"123456789","province":"8558","city":"8559","district":"8650","form_submit":"ok"}
-?>

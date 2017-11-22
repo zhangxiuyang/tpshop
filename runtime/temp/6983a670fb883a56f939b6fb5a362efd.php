@@ -1,4 +1,4 @@
-<?php if (!defined('THINK_PATH')) exit(); /*a:3:{s:36:"./template/mobile/new2/tc\index.html";i:1511156730;s:41:"./template/mobile/new2/public\header.html";i:1503927242;s:45:"./template/mobile/new2/public\header_nav.html";i:1503927242;}*/ ?>
+<?php if (!defined('THINK_PATH')) exit(); /*a:3:{s:36:"./template/mobile/new2/tc\index.html";i:1511242767;s:41:"./template/mobile/new2/public\header.html";i:1503927242;s:45:"./template/mobile/new2/public\header_nav.html";i:1511227268;}*/ ?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -24,9 +24,9 @@
         <div class="ds-in-bl search center">
             <span>套餐列表</span>
         </div>
-        <div class="ds-in-bl menu">
+       <!-- <div class="ds-in-bl menu">
             <a href="javascript:void(0);"><img src="__STATIC__/images/class1.png" alt="菜单"></a>
-        </div>
+        </div>-->
     </div>
 </div>
 <div class="flool tpnavf">
@@ -68,19 +68,21 @@
         </ul>
     </div>
 </div>
+<style>
+    #goods_list{    /*background: url(http://img4.imgtn.bdimg.com/it/u=1931659373,3162792411&fm=27&gp=0.jpg) repeat;*/}
+    .cbaudience{height: 360px; background-color: #1e695e; text-align: center;  line-height: 360px;}
+    .cbaudience p{font-size: .8rem; color: #ffffff;letter-spacing: .2rem; text-align: left;line-height: 260px; padding-left: 140px;font-family:"楷体";}
+</style>
     <!--套餐列表-s-->
         <div id="goods_list">
             <?php if(is_array($tc_list) || $tc_list instanceof \think\Collection || $tc_list instanceof \think\Paginator): if( count($tc_list)==0 ) : echo "" ;else: foreach($tc_list as $key=>$list): ?>
-                <a href="<?php echo U('Tc/tc_info',array('id'=>$list[id])); ?>">
-                <div class="banner">
-                    <img src="<?php echo $list[prom_img]; ?>"/>
-                </div>
-                <div class="cbaudience">
-                    <div class="maleri30">
-                        <p><?php echo $list[tc_name]; ?></p>
+                <a href="<?php echo U('Tc/tcInfo',array('id'=>$list[tc_id])); ?>">
+                    <div class="cbaudience">
+                            <p><?php echo $list[tc_name]; ?></p>
                     </div>
-                </div>
                 </a>
+                <br>
+                <br>
             <?php endforeach; endif; else: echo "" ;endif; ?>
         </div>
     <!--套餐列表-e-->
@@ -94,7 +96,7 @@
     function ajax_sourch_submit()
     {
         ++page;
-        $.ajax({
+       /* $.ajax({
             type : "GET",
             url:"/index.php?m=Mobile&c=Activity&a=promote_goods&is_ajax=1&p="+page,
 //			data : $('#filter_form').serialize(),// 你的formid 搜索表单 序列化提交
@@ -105,7 +107,7 @@
                     $("#goods_list").append(data);
                 }
             }
-        });
+        });*/
     }
     //滚动加载更多
     $(window).scroll(
@@ -114,7 +116,7 @@
             var scrollHeight = $(document).height();
             var windowHeight = $(this).height();
             if (scrollTop + windowHeight == scrollHeight) {
-                ajax_sourch_submit();//调用加载更多
+               // ajax_sourch_submit();//调用加载更多
             }
         }
     );

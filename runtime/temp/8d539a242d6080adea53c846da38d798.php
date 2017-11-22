@@ -1,4 +1,4 @@
-<?php if (!defined('THINK_PATH')) exit(); /*a:3:{s:40:"./application/admin/view3/tc\tcList.html";i:1510896018;s:48:"./application/admin/view3/public\min-header.html";i:1510814014;s:48:"./application/admin/view3/public\breadcrumb.html";i:1509608949;}*/ ?>
+<?php if (!defined('THINK_PATH')) exit(); /*a:3:{s:40:"./application/admin/view3/tc\tcList.html";i:1511229236;s:48:"./application/admin/view3/public\min-header.html";i:1510814014;s:48:"./application/admin/view3/public\breadcrumb.html";i:1509608949;}*/ ?>
 <!DOCTYPE html>
 <html>
   <head>
@@ -138,7 +138,8 @@
 		                   <tr role="row">
 			                   <th class="sorting" tabindex="0">ID</th>
 			                   <th class="sorting" tabindex="0">名称</th>
-			                   <th class="sorting" tabindex="0">价格</th>
+							   <th class="sorting" tabindex="0">价格</th>
+							  <!-- <th class="sorting" tabindex="0">市场价</th>-->
 			                   <th class="sorting" tabindex="0">创建时间</th>
 			                   <th class="sorting" tabindex="0">最后修改时间</th>
 			                   <th class="sorting" tabindex="0">状态</th>
@@ -150,7 +151,8 @@
 						  	<tr role="row" align="center">
 		                     <td><?php echo $vo['tc_id']; ?></td>
 							 <td><?php echo $vo['tc_name']; ?></td>
-							 <td><?php echo $vo['price']; ?></td>
+							 <td><?php echo $vo['price']; ?>&nbsp;元</td>
+							 <!--<td><?php echo $vo['marketGoodsTotalPrice']; ?></td>-->
 		                     <td><?php echo date('Y-m-d H:i',$vo['tc_time']); ?></td>
 		                     <td><?php echo date('Y-m-d H:i',$vo['last_time']); ?></td>
 		                     <td>
@@ -209,7 +211,7 @@ function checkMonth(obj) {
         area : ['960px' , '720px'],
         content: $(obj).attr('data-url'),
         end:function () {
-			window.location.reload();
+			//window.location.reload();
         }
     });
 }
