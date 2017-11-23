@@ -91,7 +91,7 @@ class User extends MobileBase
         setcookie('user_id','',time()-3600,'/');
         setcookie('PHPSESSID','',time()-3600,'/');
         //$this->success("退出成功",U('Mobile/Index/index'));
-        header("Location:" . U('Mobile/Index/index'));
+        header("Location:" . U('Mobile/User/login'));
         exit();
     }
 
@@ -195,7 +195,7 @@ class User extends MobileBase
 //
 //            header("Location: " . U('Mobile/User/index'));
         }
-        $referurl = isset($_SERVER['HTTP_REFERER']) ? $_SERVER['HTTP_REFERER'] : U("Mobile/User/index");
+        $referurl = isset($_SERVER['HTTP_REFERER']) ? $_SERVER['HTTP_REFERER'] : U("Mobile/Tc/index");
         $this->assign('referurl', $referurl);
         return $this->fetch();
     }
@@ -222,13 +222,13 @@ class User extends MobileBase
             $res['url'] = urldecode(I('post.referurl'));
             session('user', $res['result']);
             setcookie('user_id', $res['result']['user_id'], null, '/');
-            setcookie('is_distribut', $res['result']['is_distribut'], null, '/');
+            //setcookie('is_distribut', $res['result']['is_distribut'], null, '/');
             $nickname = empty($res['result']['nickname']) ? $username : $res['result']['nickname'];
             setcookie('uname', urlencode($nickname), null, '/');
             setcookie('cn', 0, time() - 3600, '/');
-            $cartLogic = new CartLogic();
-            $cartLogic->setUserId($res['result']['user_id']);
-            $cartLogic->doUserLoginHandle();// 用户登录后 需要对购物车 一些操作
+           // $cartLogic = new CartLogic();
+           // $cartLogic->setUserId($res['result']['user_id']);
+           // $cartLogic->doUserLoginHandle();// 用户登录后 需要对购物车 一些操作
 //            $cartLogic->login_cart_handle($this->session_id, $res['result']['user_id']);  //用户登录后 需要对购物车 一些操作
         }
         exit(json_encode($res));
@@ -901,6 +901,7 @@ class User extends MobileBase
             $this->ajaxReturn(['status'=>1,'msg'=>$data['msg'],'url'=>U('/Mobile/User/index')]);
             exit;
         }
+        $this->assign("has_password",1);
         return $this->fetch();
     }
 

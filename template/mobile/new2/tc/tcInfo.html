@@ -72,7 +72,7 @@
         <div class="fr" style="width:100%; max-width: 16rem;float: none; margin: auto;">
             <ul>
                 <li class="o">
-                    <a class="pb_plusshopcar button active_button choise_num" href="javascript:void(0);"> 收藏</a>
+                    <a href="collect_tc;"> 收藏</a>
                 </li>
                 <li class="r">
                     <a class="choise_num" style="display:block;" href="javascript:void(0);">立即购买</a>
@@ -121,6 +121,18 @@
             });
         }});
     }
+    //点击收藏商品
+    function collect_tc(tc_id){
+        $.ajax({
+            type : "GET",
+            dataType: "json",
+            url:"/index.php?m=Mobile&c=tc&a=collect_tc&tc_id="+tc_id,//+tab,
+            success: function(data){
+                layer.open({content:data.msg, time:2});
+            }
+        });
+    }
+
 
     //时间戳转换
     function add0(m){return m<10?'0'+m:m }

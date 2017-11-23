@@ -1,4 +1,4 @@
-<?php if (!defined('THINK_PATH')) exit(); /*a:3:{s:37:"./template/mobile/new2/tc\tcInfo.html";i:1511333050;s:41:"./template/mobile/new2/public\header.html";i:1503927242;s:43:"./template/mobile/new2/public\wx_share.html";i:1503927242;}*/ ?>
+<?php if (!defined('THINK_PATH')) exit(); /*a:3:{s:37:"./template/mobile/new2/tc\tcInfo.html";i:1511422214;s:41:"./template/mobile/new2/public\header.html";i:1503927242;s:43:"./template/mobile/new2/public\wx_share.html";i:1503927242;}*/ ?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -89,7 +89,7 @@
         <div class="fr" style="width:100%; max-width: 16rem;float: none; margin: auto;">
             <ul>
                 <li class="o">
-                    <a class="pb_plusshopcar button active_button choise_num" href="javascript:void(0);"> 收藏</a>
+                    <a class="pb_plusshopcar button active_button" href="collect_tc;"> 收藏</a>
                 </li>
                 <li class="r">
                     <a class="choise_num" style="display:block;" href="javascript:void(0);">立即购买</a>
@@ -138,6 +138,18 @@
             });
         }});
     }
+    //点击收藏商品
+    function collect_tc(tc_id){
+        $.ajax({
+            type : "GET",
+            dataType: "json",
+            url:"/index.php?m=Mobile&c=tc&a=collect_tc&tc_id="+tc_id,//+tab,
+            success: function(data){
+                layer.open({content:data.msg, time:2});
+            }
+        });
+    }
+
 
     //时间戳转换
     function add0(m){return m<10?'0'+m:m }

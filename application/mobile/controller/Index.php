@@ -17,6 +17,11 @@ use Think\Db;
 class Index extends MobileBase {
 
     public function index(){
+        /**
+         * 关闭主页 重定向 到 套餐列表
+         */
+        header("location:" . U('Mobile/Tc/index'));
+        exit;
         /*
             //获取微信配置
             $wechat_list = M('wx_user')->select();

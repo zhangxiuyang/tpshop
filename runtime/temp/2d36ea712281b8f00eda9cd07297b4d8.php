@@ -1,9 +1,9 @@
-<?php if (!defined('THINK_PATH')) exit(); /*a:5:{s:36:"./template/mobile/new2/tc\index.html";i:1511419468;s:41:"./template/mobile/new2/public\header.html";i:1503927242;s:46:"./template/mobile/new2/public\header_nav2.html";i:1511419418;s:45:"./template/mobile/new2/public\footer_nav.html";i:1511419758;s:43:"./template/mobile/new2/public\wx_share.html";i:1503927242;}*/ ?>
+<?php if (!defined('THINK_PATH')) exit(); /*a:4:{s:38:"./template/mobile/new2/user\index.html";i:1511419150;s:41:"./template/mobile/new2/public\header.html";i:1503927242;s:45:"./template/mobile/new2/public\footer_nav.html";i:1511419758;s:43:"./template/mobile/new2/public\wx_share.html";i:1503927242;}*/ ?>
 <!DOCTYPE html>
 <html>
 <head>
     <meta charset="UTF-8" />
-    <title>套餐列表--<?php echo $tpshop_config['shop_info_store_title']; ?></title>
+    <title>个人中心--<?php echo $tpshop_config['shop_info_store_title']; ?></title>
     <link rel="stylesheet" href="__STATIC__/css/style.css">
     <link rel="stylesheet" type="text/css" href="__STATIC__/css/iconfont.css"/>
     <script src="__STATIC__/js/jquery-3.1.1.min.js" type="text/javascript" charset="utf-8"></script>
@@ -14,34 +14,134 @@
     <script src="__STATIC__/js/layer.js"  type="text/javascript" ></script>
     <script src="__STATIC__/js/swipeSlide.min.js" type="text/javascript" charset="utf-8"></script>
 </head>
-<body class="[body]">
+<body class="g4">
 
-<div class="classreturn loginsignup ">
-    <div class="content">
-
-        <div class="ds-in-bl search center">
-            <span>套餐列表</span>
+<style>
+    .my .content .floor_order ul li {
+        width: 25%;
+    }
+</style>
+    <div class="myhearder">
+        <div class="person">
+            <!--<a href="">-->
+                <div class="fl personicon">
+                    <div class="personicon">
+                        <img src="<?php echo (isset($user[head_pic]) && ($user[head_pic] !== '')?$user[head_pic]:"__STATIC__/images/user68.jpg"); ?>"/>
+                    </div>
+                </div>
+                <div class="fl lors">
+                    <span><?php echo $user['nickname']; ?></span>
+                    <?php if($first_nickname != ''): ?>
+                        <br />
+                        <span style="font-size:20px">由(<?php echo $first_nickname; ?>)推荐</span>
+                    <?php endif; ?>
+                </div>
+            <!--</a>-->
+        </div>
+        <div class="set">
+            <!--设置-->
+            <a class="setting" href="<?php echo U('Mobile/User/userinfo'); ?>"><i></i></a>
+            <!--&lt;!&ndash;我的留言&ndash;&gt;-->
+            <!--<a class="massage" href="<?php echo U('User/message_notice'); ?>"><i></i></a>-->
+        </div>
+        <div class="scgz">
+            <ul>
+                <li>
+                    <a href="<?php echo U('Mobile/User/collect_list'); ?>">
+                        <h2><?php echo $user['collect_count']; ?></h2>
+                        <p>我的收藏</p>
+                    </a>
+                </li>
+                <li>
+                    <a href="<?php echo U('Mobile/User/message_notice'); ?>">
+                        <h2><?php echo $user_message_count; ?></h2>
+                        <p>消息通知</p>
+                    </a>
+                </li>
+            </ul>
         </div>
     </div>
-</div>
-<style>
-    #goods_list{    /*background: url(http://img4.imgtn.bdimg.com/it/u=1931659373,3162792411&fm=27&gp=0.jpg) repeat;*/}
-    .cbaudience{height: 360px; background-color: #1e695e; text-align: center;  line-height: 360px;}
-    .cbaudience p{font-size: .8rem; color: #ffffff;letter-spacing: .2rem; text-align: left;line-height: 260px; padding-left: 140px;font-family:"楷体";}
-</style>
-    <!--套餐列表-s-->
-        <div id="goods_list">
-            <?php if(is_array($tc_list) || $tc_list instanceof \think\Collection || $tc_list instanceof \think\Paginator): if( count($tc_list)==0 ) : echo "" ;else: foreach($tc_list as $key=>$list): ?>
-                <a href="<?php echo U('Tc/tcInfo',array('id'=>$list[tc_id])); ?>">
-                    <div class="cbaudience">
-                            <p><?php echo $list[tc_name]; ?></p>
+
+    <div class="floor my p">
+        <div class="content">
+            <!--订单管理模块-s-->
+            <div class="floor myorder ma-to-20 p">
+                <div class="content30">
+                    <div class="order">
+                        <div class="fl">
+                            <img src="__STATIC__/images/mlist.png"/>
+                            <span>我的订单</span>
+                        </div>
+                        <div class="fr">
+                            <a href="<?php echo U('Mobile/User/order_list'); ?>">
+                                <span>全部订单</span>
+                                <i class="Mright"></i>
+                            </a>
+                        </div>
                     </div>
-                </a>
-                <br>
-                <br>
-            <?php endforeach; endif; else: echo "" ;endif; ?>
+                </div>
+            </div>
+            <div class="floor floor_order">
+                <ul>
+                    <li>
+                        <a href="<?php echo U('/Mobile/User/order_list',array('type'=>'WAITPAY')); ?>">
+                            <span><?php echo $user['waitPay']; ?></span>
+                            <img src="__STATIC__/images/q1.png" alt="" />
+                            <p>待付款</p>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="<?php echo U('/Mobile/User/wait_receive',array('type'=>'WAITRECEIVE')); ?>">
+                            <span><?php echo $user['waitReceive']; ?></span>
+                            <img src="__STATIC__/images/q2.png" alt="" />
+                            <p>待收货</p>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="<?php echo U('Mobile/User/comment',array('status'=>0)); ?>">
+                            <span><?php echo $user['uncomment_count']; ?></span>
+                            <img src="__STATIC__/images/q3.png" alt="" />
+                            <p>待评价</p>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="<?php echo U('Mobile/User/return_goods_list',array('type'=>1)); ?>">
+                            <span><?php echo $user['return_count']; ?></span>
+                            <img src="__STATIC__/images/q4.png" alt="" />
+                            <p>退款/退货</p>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+            <!--订单管理模块-e-->
+
+
+
+            <div class="floor list7 ma-to-20">
+                <div class="myorder p">
+                    <div class="content30">
+                        <a href="<?php echo U('Mobile/User/address_list'); ?>">
+                            <div class="order">
+                                <div class="fl">
+                                    <img src="__STATIC__/images/w8.png"/>
+                                    <span>地址管理</span>
+                                </div>
+                                <div class="fr">
+                                    <i class="Mright"></i>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+            </div>
         </div>
-    <!--套餐列表-e-->
+        <div class="setting">
+            <div class="close">
+                <a href="<?php echo U('Mobile/User/logout'); ?>" id="logout">安全退出</a>
+            </div>
+        </div>
+    </div>
+
     <!--底部导航-start-->
     <style>
     .footer ul li {
@@ -216,39 +316,7 @@ $(function(){
 
 <!--微信关注提醒  end-->
 <!-- 微信浏览器 调用微信 分享js  end-->
+    <!--底部导航-end-->
+    <script src="__STATIC__/js/style.js" type="text/javascript" charset="utf-8"></script>
 </body>
-<script type="text/javascript" src="__STATIC__/js/sourch_submit.js"></script>
-<script>
-    /**
-     * 加载更多商品
-     **/
-    var  page = 1;
-    function ajax_sourch_submit()
-    {
-        ++page;
-       /* $.ajax({
-            type : "GET",
-            url:"/index.php?m=Mobile&c=Activity&a=promote_goods&is_ajax=1&p="+page,
-//			data : $('#filter_form').serialize(),// 你的formid 搜索表单 序列化提交
-            success: function(data) {
-                if ($.trim(data) == '') {
-                    $('#getmore').hide();
-                } else {
-                    $("#goods_list").append(data);
-                }
-            }
-        });*/
-    }
-    //滚动加载更多
-    $(window).scroll(
-        function() {
-            var scrollTop = $(this).scrollTop();
-            var scrollHeight = $(document).height();
-            var windowHeight = $(this).height();
-            if (scrollTop + windowHeight == scrollHeight) {
-               // ajax_sourch_submit();//调用加载更多
-            }
-        }
-    );
-</script>
 </html>

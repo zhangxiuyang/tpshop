@@ -1,5 +1,73 @@
-<include file="public/header" title="设置" body="g4"/>
-<include file="public/header_nav" title="设置" href="javascript:history.back(-1);"/>
+<?php if (!defined('THINK_PATH')) exit(); /*a:3:{s:41:"./template/mobile/new2/user\userinfo.html";i:1511419936;s:41:"./template/mobile/new2/public\header.html";i:1503927242;s:45:"./template/mobile/new2/public\header_nav.html";i:1511227268;}*/ ?>
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8" />
+    <title>设置--<?php echo $tpshop_config['shop_info_store_title']; ?></title>
+    <link rel="stylesheet" href="__STATIC__/css/style.css">
+    <link rel="stylesheet" type="text/css" href="__STATIC__/css/iconfont.css"/>
+    <script src="__STATIC__/js/jquery-3.1.1.min.js" type="text/javascript" charset="utf-8"></script>
+    <!--<script src="__STATIC__/js/zepto-1.2.0-min.js" type="text/javascript" charset="utf-8"></script>-->
+    <script src="__STATIC__/js/style.js" type="text/javascript" charset="utf-8"></script>
+    <script src="__STATIC__/js/mobile-util.js" type="text/javascript" charset="utf-8"></script>
+    <script src="__PUBLIC__/js/global.js"></script>
+    <script src="__STATIC__/js/layer.js"  type="text/javascript" ></script>
+    <script src="__STATIC__/js/swipeSlide.min.js" type="text/javascript" charset="utf-8"></script>
+</head>
+<body class="g4">
+
+<div class="classreturn loginsignup ">
+    <div class="content">
+        <div class="ds-in-bl return">
+            <a href="javascript:history.back(-1);"><img src="__STATIC__/images/return.png" alt="返回"></a>
+        </div>
+        <div class="ds-in-bl search center">
+            <span>设置</span>
+        </div>
+       <!-- <div class="ds-in-bl menu">
+            <a href="javascript:void(0);"><img src="__STATIC__/images/class1.png" alt="菜单"></a>
+        </div>-->
+    </div>
+</div>
+<div class="flool tpnavf">
+    <div class="footer">
+        <ul>
+            <li>
+                <a class="yello" href="<?php echo U('Index/index'); ?>">
+                    <div class="icon">
+                        <i class="icon-shouye iconfont"></i>
+                        <p>首页</p>
+                    </div>
+                </a>
+            </li>
+            <li>
+                <a href="<?php echo U('Goods/categoryList'); ?>">
+                    <div class="icon">
+                        <i class="icon-fenlei iconfont"></i>
+                        <p>分类</p>
+                    </div>
+                </a>
+            </li>
+            <li>
+                <!--<a href="shopcar.html">-->
+                <a href="<?php echo U('Cart/index'); ?>">
+                    <div class="icon">
+                        <i class="icon-gouwuche iconfont"></i>
+                        <p>购物车</p>
+                    </div>
+                </a>
+            </li>
+            <li>
+                <a href="<?php echo U('User/index'); ?>">
+                    <div class="icon">
+                        <i class="icon-wode iconfont"></i>
+                        <p>我的</p>
+                    </div>
+                </a>
+            </li>
+        </ul>
+    </div>
+</div>
 		<div class="floor my p setting">
 			<div class="content">
 				<div class="floor list7">
@@ -17,7 +85,7 @@
 											<form id="head_pic" method="post" enctype="multipart/form-data">
 											<label class="file" style="cursor:pointer;">
 											<div class="around" id="fileList">
-												<img src="{$user.head_pic|default='__STATIC__/images/user68.jpg'}"/>
+												<img src="<?php echo (isset($user['head_pic']) && ($user['head_pic'] !== '')?$user['head_pic']:'__STATIC__/images/user68.jpg'); ?>"/>
 												<input  type="file" accept="image/*" name="head_pic"  onchange="handleFiles(this)" style="display:none">
 											</div></label>
 											</form>
@@ -29,13 +97,13 @@
 					</div>
 					<div class="myorder p">
 						<div class="content30">
-							<a href="{:U('Mobile/User/userinfo',array('action'=>'nickname'))}">
+							<a href="<?php echo U('Mobile/User/userinfo',array('action'=>'nickname')); ?>">
 								<div class="order">
 									<div class="fl">
 										<span>用户名</span>
 									</div>
 									<div class="fr">
-                                        <span>{$user.nickname}</span>
+                                        <span><?php echo $user['nickname']; ?></span>
 										<i class="Mright"></i>
 									</div>
 								</div>
@@ -44,13 +112,13 @@
 					</div>
 					<div class="myorder p">
 						<div class="content30">
-							<a href="{:U('Mobile/User/userinfo',array('action'=>'sex'))}">
+							<a href="<?php echo U('Mobile/User/userinfo',array('action'=>'sex')); ?>">
 								<div class="order">
 									<div class="fl">
 										<span>性别</span>
 									</div>
 									<div class="fr">
-                                        <span>{$sex[$user.sex]}</span>
+                                        <span><?php echo $sex[$user['sex']]; ?></span>
 										<i class="Mright"></i>
 									</div>
 								</div>
@@ -59,13 +127,13 @@
 					</div>
 					<div class="myorder p">
 						<div class="content30">
-							<a href="{:U('Mobile/User/userinfo',array('action'=>'mobile'))}">
+							<a href="<?php echo U('Mobile/User/userinfo',array('action'=>'mobile')); ?>">
 								<div class="order">
 									<div class="fl">
 										<span>手机</span>
 									</div>
 									<div class="fr">
-                                        <span>{$user.mobile}</span>
+                                        <span><?php echo $user['mobile']; ?></span>
 										<i class="Mright"></i>
 									</div>
 								</div>
@@ -74,13 +142,13 @@
 					</div>
 					<div class="myorder p bo">
 						<div class="content30">
-							<a href="{:U('Mobile/User/userinfo',array('action'=>'email'))}">
+							<a href="<?php echo U('Mobile/User/userinfo',array('action'=>'email')); ?>">
 								<div class="order">
 									<div class="fl">
 										<span>邮箱</span>
 									</div>
 									<div class="fr">
-                                        <span>{$user.email}</span>
+                                        <span><?php echo $user['email']; ?></span>
 										<i class="Mright"></i>
 									</div>
 								</div>
@@ -89,7 +157,7 @@
 					</div>
 					<div class="myorder p ma-to-20">
 						<div class="content30">
-							<a href="{:U('Mobile/User/password')}">
+							<a href="<?php echo U('Mobile/User/password'); ?>">
 								<div class="order">
 									<div class="fl">
 										<span>修改密码</span>
@@ -103,7 +171,7 @@
 					</div>
                     <!--<div class="myorder p">
                         <div class="content30">
-                            <a href="{:U('Mobile/User/paypwd')}">
+                            <a href="<?php echo U('Mobile/User/paypwd'); ?>">
                                 <div class="order">
                                     <div class="fl">
                                         <span>支付密码</span>
@@ -117,7 +185,7 @@
                     </div>-->
 					<div class="myorder p">
 						<div class="content30">
-							<a href="{:U('Mobile/User/address_list')}">
+							<a href="<?php echo U('Mobile/User/address_list'); ?>">
 								<div class="order">
 									<div class="fl">
 										<span>收货地址</span>
@@ -131,7 +199,7 @@
 					</div>
 					<!--<div class="myorder p bo">
 						<div class="content30">
-							<a href="{:U('Mobile/User/authinfo')}">
+							<a href="<?php echo U('Mobile/User/authinfo'); ?>">
 								<div class="order">
 									<div class="fl">
 										<span>实名认证</span>
@@ -146,7 +214,7 @@
 				</div>-->
 			</div>
 			<div class="close">
-				<a href="{:U('User/logout')}" id="logout">安全退出</a>
+				<a href="<?php echo U('User/logout'); ?>" id="logout">安全退出</a>
 				<a id="asubmit" style="display:none;" href="javascript:;" onclick="javascript:$('#head_pic').submit();">保存头像</a>
 			</div>
 		</div>

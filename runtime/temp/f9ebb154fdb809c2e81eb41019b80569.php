@@ -1,9 +1,9 @@
-<?php if (!defined('THINK_PATH')) exit(); /*a:5:{s:36:"./template/mobile/new2/tc\index.html";i:1511419468;s:41:"./template/mobile/new2/public\header.html";i:1503927242;s:46:"./template/mobile/new2/public\header_nav2.html";i:1511419418;s:45:"./template/mobile/new2/public\footer_nav.html";i:1511419758;s:43:"./template/mobile/new2/public\wx_share.html";i:1503927242;}*/ ?>
+<?php if (!defined('THINK_PATH')) exit(); /*a:5:{s:45:"./template/mobile/new2/user\collect_list.html";i:1503927244;s:41:"./template/mobile/new2/public\header.html";i:1503927242;s:45:"./template/mobile/new2/public\header_nav.html";i:1511227268;s:45:"./template/mobile/new2/public\footer_nav.html";i:1511419758;s:43:"./template/mobile/new2/public\wx_share.html";i:1503927242;}*/ ?>
 <!DOCTYPE html>
 <html>
 <head>
     <meta charset="UTF-8" />
-    <title>套餐列表--<?php echo $tpshop_config['shop_info_store_title']; ?></title>
+    <title>我的收藏--<?php echo $tpshop_config['shop_info_store_title']; ?></title>
     <link rel="stylesheet" href="__STATIC__/css/style.css">
     <link rel="stylesheet" type="text/css" href="__STATIC__/css/iconfont.css"/>
     <script src="__STATIC__/js/jquery-3.1.1.min.js" type="text/javascript" charset="utf-8"></script>
@@ -14,36 +14,93 @@
     <script src="__STATIC__/js/layer.js"  type="text/javascript" ></script>
     <script src="__STATIC__/js/swipeSlide.min.js" type="text/javascript" charset="utf-8"></script>
 </head>
-<body class="[body]">
+<body class="">
 
 <div class="classreturn loginsignup ">
     <div class="content">
-
-        <div class="ds-in-bl search center">
-            <span>套餐列表</span>
+        <div class="ds-in-bl return">
+            <a href="javascript:history.back(-1)"><img src="__STATIC__/images/return.png" alt="返回"></a>
         </div>
+        <div class="ds-in-bl search center">
+            <span>我的收藏</span>
+        </div>
+       <!-- <div class="ds-in-bl menu">
+            <a href="javascript:void(0);"><img src="__STATIC__/images/class1.png" alt="菜单"></a>
+        </div>-->
     </div>
 </div>
-<style>
-    #goods_list{    /*background: url(http://img4.imgtn.bdimg.com/it/u=1931659373,3162792411&fm=27&gp=0.jpg) repeat;*/}
-    .cbaudience{height: 360px; background-color: #1e695e; text-align: center;  line-height: 360px;}
-    .cbaudience p{font-size: .8rem; color: #ffffff;letter-spacing: .2rem; text-align: left;line-height: 260px; padding-left: 140px;font-family:"楷体";}
-</style>
-    <!--套餐列表-s-->
-        <div id="goods_list">
-            <?php if(is_array($tc_list) || $tc_list instanceof \think\Collection || $tc_list instanceof \think\Paginator): if( count($tc_list)==0 ) : echo "" ;else: foreach($tc_list as $key=>$list): ?>
-                <a href="<?php echo U('Tc/tcInfo',array('id'=>$list[tc_id])); ?>">
-                    <div class="cbaudience">
-                            <p><?php echo $list[tc_name]; ?></p>
+<div class="flool tpnavf">
+    <div class="footer">
+        <ul>
+            <li>
+                <a class="yello" href="<?php echo U('Index/index'); ?>">
+                    <div class="icon">
+                        <i class="icon-shouye iconfont"></i>
+                        <p>首页</p>
                     </div>
                 </a>
-                <br>
-                <br>
-            <?php endforeach; endif; else: echo "" ;endif; ?>
+            </li>
+            <li>
+                <a href="<?php echo U('Goods/categoryList'); ?>">
+                    <div class="icon">
+                        <i class="icon-fenlei iconfont"></i>
+                        <p>分类</p>
+                    </div>
+                </a>
+            </li>
+            <li>
+                <!--<a href="shopcar.html">-->
+                <a href="<?php echo U('Cart/index'); ?>">
+                    <div class="icon">
+                        <i class="icon-gouwuche iconfont"></i>
+                        <p>购物车</p>
+                    </div>
+                </a>
+            </li>
+            <li>
+                <a href="<?php echo U('User/index'); ?>">
+                    <div class="icon">
+                        <i class="icon-wode iconfont"></i>
+                        <p>我的</p>
+                    </div>
+                </a>
+            </li>
+        </ul>
+    </div>
+</div>
+
+<?php if(empty($goods_list)): ?>
+    <!--没有收藏-s-->
+    <div class="comment_con p">
+        <div class="none"><img src="__STATIC__/images/none.png"><br><br>亲，此处还没有收藏哦~</div>
+    </div>
+    <!--没有收藏-e-->
+<?php else: ?>
+    <div class="floor guesslike">
+        <div class="likeshop">
+            <ul id="goods_list">
+                <?php if(is_array($goods_list) || $goods_list instanceof \think\Collection || $goods_list instanceof \think\Paginator): if( count($goods_list)==0 ) : echo "" ;else: foreach($goods_list as $key=>$good): ?>
+                    <li>
+                        <div class="similer-product">
+                            <a class="simidibl" href="<?php echo U('Goods/goodsInfo',array('id'=>$good[goods_id])); ?>">
+                                <img src="<?php echo goods_thum_images($good['goods_id'],400,400); ?>"/>
+                                <span class="similar-product-text"><?php echo getSubstr($good[goods_name],0,20); ?></span>
+                            </a>
+                                <span class="similar-product-price">
+                                    ¥
+                                    <span class="big-price"><?php echo $good[shop_price]; ?></span>
+                                    <a href="<?php echo U('Goods/goodsList',['id'=>$good['cat_id']]); ?>"><span class="guess-button dele-button J_ping">看相似</span></a>
+                                    <a href="<?php echo U('Mobile/User/cancel_collect', ['collect_id'=>$good[collect_id]]); ?>"><span class="guess-button  J_ping">删除</span></a>
+                                </span>
+                        </div>
+                    </li>
+                <?php endforeach; endif; else: echo "" ;endif; ?>
+            </ul>
         </div>
-    <!--套餐列表-e-->
-    <!--底部导航-start-->
-    <style>
+    </div>
+<?php endif; ?>
+<!--底部导航-start-->
+<style>
     .footer ul li {
 float: left;
 text-align: center;
@@ -216,39 +273,28 @@ $(function(){
 
 <!--微信关注提醒  end-->
 <!-- 微信浏览器 调用微信 分享js  end-->
-</body>
+<!--底部导航-end-->
 <script type="text/javascript" src="__STATIC__/js/sourch_submit.js"></script>
-<script>
+<script  type="text/javascript" charset="utf-8">
     /**
-     * 加载更多商品
-     **/
-    var  page = 1;
+     * ajax加载更多
+     * */
+    var page = 1;
     function ajax_sourch_submit()
     {
-        ++page;
-       /* $.ajax({
+        page += 1;
+        $.ajax({
             type : "GET",
-            url:"/index.php?m=Mobile&c=Activity&a=promote_goods&is_ajax=1&p="+page,
-//			data : $('#filter_form').serialize(),// 你的formid 搜索表单 序列化提交
-            success: function(data) {
-                if ($.trim(data) == '') {
-                    $('#getmore').hide();
-                } else {
+            url:"/index.php/Mobile/User/collect_list?is_ajax=1&p="+page,//+tab,
+            success: function(data)
+            {
+                if($.trim(data) != '')
+                {
                     $("#goods_list").append(data);
                 }
             }
-        });*/
+        });
     }
-    //滚动加载更多
-    $(window).scroll(
-        function() {
-            var scrollTop = $(this).scrollTop();
-            var scrollHeight = $(document).height();
-            var windowHeight = $(this).height();
-            if (scrollTop + windowHeight == scrollHeight) {
-               // ajax_sourch_submit();//调用加载更多
-            }
-        }
-    );
 </script>
+</body>
 </html>
