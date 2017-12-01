@@ -1,4 +1,4 @@
-<?php if (!defined('THINK_PATH')) exit(); /*a:3:{s:45:"./template/mobile/new2/user\address_list.html";i:1503927244;s:41:"./template/mobile/new2/public\header.html";i:1503927242;s:45:"./template/mobile/new2/public\header_nav.html";i:1511227268;}*/ ?>
+<?php if (!defined('THINK_PATH')) exit(); /*a:3:{s:45:"./template/mobile/new2/user\address_list.html";i:1512111494;s:41:"./template/mobile/new2/public\header.html";i:1503927242;s:45:"./template/mobile/new2/public\header_nav.html";i:1511227268;}*/ ?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -101,8 +101,22 @@
                         <span class="similars"><?php echo $region_list[$list['province']]; ?>,<?php echo $region_list[$list['city']]; ?>,<?php echo $region_list[$list['district']]; ?>,<?php echo $region_list[$list['twon']]; ?><?php echo $list['address']; ?></span>
                     </div>
                 </a>
-                <!--从确认订单页进来-->
-                <?php else: ?>
+                <?php elseif(\think\Request::instance()->param('source') == 'buy1'): ?>
+                    <!--从套餐购买进来-->
+                    <a href="<?php echo U('/Mobile/TcBuy/buy1',array('address_id'=>$list['address_id'],'tc_id'=>\think\Request::instance()->param('tc_id'))); ?>">
+                        <div class="name fl">
+                            <h1><?php echo $list[consignee]; ?></h1>
+                            <?php if($list[is_default] == 1): ?>
+                                <span>默认</span>
+                            <?php endif; ?>
+                        </div>
+                        <div class="numberaddress fl">
+                            <span class="number">电话：<?php echo $list[mobile]; ?></span>
+                            <span class="similars"><?php echo $region_list[$list['province']]; ?>,<?php echo $region_list[$list['city']]; ?>,<?php echo $region_list[$list['district']]; ?>,<?php echo $region_list[$list['twon']]; ?><?php echo $list['address']; ?></span>
+                        </div>
+                    </a>
+                 <!--从确认订单页进来-->
+                 <?php else: ?>
                     <div class="name fl">
                         <h1><?php echo $list[consignee]; ?></h1>
                         <?php if($list[is_default] == 1): ?>
@@ -115,7 +129,7 @@
                     </div>
                 <?php endif; ?>
                 <div class="editdiv fl">
-                    <a href="<?php echo U('/Mobile/User/edit_address',array('id'=>$list[address_id],'source'=>\think\Request::instance()->param('source'))); ?>">
+                    <a href="<?php echo U('/Mobile/User/edit_address',array('id'=>$list[address_id],'source'=>\think\Request::instance()->param('source'),'tc_id'=>\think\Request::instance()->param('tc_id'))); ?>">
                         <i class="eedit"></i>
                     </a>
                 </div>
@@ -125,7 +139,12 @@
 <!--地址-e-->
     <div class="hek">
         <div class="createnew">
-            <a href="<?php echo U('/Mobile/User/add_address',array('source'=>\think\Request::instance()->param('source'))); ?>">+新建地址</a>
+            <?php if(\think\Request::instance()->param('source') == 'buy1'): ?>
+                <a href="<?php echo U('/Mobile/User/add_address',array('source'=>\think\Request::instance()->param('source'),'tc_id'=>\think\Request::instance()->param('tc_id'))); ?>">+新建地址</a>
+            <?php else: ?>
+                <a href="<?php echo U('/Mobile/User/add_address',array('source'=>\think\Request::instance()->param('source'))); ?>">+新建地址</a>
+            <?php endif; ?>
+
         </div>
     </div>
 </body>

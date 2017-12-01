@@ -1,4 +1,4 @@
-<?php if (!defined('THINK_PATH')) exit(); /*a:3:{s:41:"./application/admin/view3/tc\tc_edit.html";i:1510891704;s:48:"./application/admin/view3/public\min-header.html";i:1510814014;s:48:"./application/admin/view3/public\breadcrumb.html";i:1509608949;}*/ ?>
+<?php if (!defined('THINK_PATH')) exit(); /*a:3:{s:41:"./application/admin/view3/tc\tc_edit.html";i:1511500100;s:48:"./application/admin/view3/public\min-header.html";i:1510814014;s:48:"./application/admin/view3/public\breadcrumb.html";i:1509608949;}*/ ?>
 <!DOCTYPE html>
 <html>
   <head>
@@ -230,7 +230,21 @@
                            <label><input type="radio" name="tc_status" value="0"<?php if($info[tc_status] == 0): ?> checked="checked"<?php endif; ?>> 不可用</label>
                         </div>
                       </div>
-                    </div>    
+                    </div>
+
+                      <div class="form-group">
+                          <label class="col-sm-2 control-label">广告图片</label>
+                          <div class="col-xs-2" style="width: 70%;">
+                              <div class="col-sm-3">
+                                  <input type="text" class="form-control" style="width:350px;margin-left:-15px;" name="tc_image" id="tc_image" value="<?php echo $info['tc_image']; ?>">
+                              </div>
+                              <div class="col-sm-3">
+                                  <input type="button" class="btn btn-default" onclick="GetUploadify(1,'tc_image','tc','')" value="上传图片">
+                              </div>
+                          </div>
+                      </div>
+
+
 
                     <div class="form-group">
 	                    <label class="control-label col-sm-2">套餐内容</label>

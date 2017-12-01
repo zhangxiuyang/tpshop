@@ -1,4 +1,4 @@
-<?php if (!defined('THINK_PATH')) exit(); /*a:4:{s:38:"./template/mobile/new2/user\index.html";i:1511419150;s:41:"./template/mobile/new2/public\header.html";i:1503927242;s:45:"./template/mobile/new2/public\footer_nav.html";i:1511419758;s:43:"./template/mobile/new2/public\wx_share.html";i:1503927242;}*/ ?>
+<?php if (!defined('THINK_PATH')) exit(); /*a:4:{s:38:"./template/mobile/new2/user\index.html";i:1511419150;s:41:"./template/mobile/new2/public\header.html";i:1503927242;s:45:"./template/mobile/new2/public\footer_nav.html";i:1511503571;s:43:"./template/mobile/new2/public\wx_share.html";i:1503927242;}*/ ?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -154,16 +154,16 @@ width: 50%;
     <div class="footer">
         <ul>
             <li>
-                <a <?php if(CONTROLLER_NAME == 'Tc'): ?>class="yello" <?php else: ?>href="<?php echo U('Index/index'); ?>"<?php endif; ?>  >
+                <a <?php if(CONTROLLER_NAME == 'Tc'): ?>class="yello" <?php else: ?>onclick="layer.open({type: 2});" href="<?php echo U('Index/index'); ?>"<?php endif; ?>  >
                     <div class="icon">
                         <i class="icon-shouye iconfont"></i>
-                        <p>首页</p>
+                        <p>套餐</p>
                     </div>
                 </a>
             </li>
 
             <li>
-                <a <?php if(CONTROLLER_NAME == 'User'): ?>class="yello" <?php else: ?>href="<?php echo U('User/index'); ?>"<?php endif; ?> >
+                <a <?php if(CONTROLLER_NAME == 'User'): ?>class="yello" <?php else: ?>onclick="layer.open({type: 2});" href="<?php echo U('User/index'); ?>"<?php endif; ?> >
                     <div class="icon">
                         <i class="icon-wode iconfont"></i>
                         <p>我的</p>

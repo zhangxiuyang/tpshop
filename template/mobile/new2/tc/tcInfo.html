@@ -72,10 +72,10 @@
         <div class="fr" style="width:100%; max-width: 16rem;float: none; margin: auto;">
             <ul>
                 <li class="o">
-                    <a href="collect_tc;"> 收藏</a>
+                    <a href="javascript:collect_tc({$v.tc_id});"> 收藏</a>
                 </li>
                 <li class="r">
-                    <a class="choise_num" style="display:block;" href="javascript:void(0);">立即购买</a>
+                    <a class="choise_num" style="display:block;" href="{:U('TcBuy/buy1',array('tc_id'=>$v.tc_id))}">立即购买</a>
                 </li>
             </ul>
         </div>

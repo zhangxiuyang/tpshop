@@ -26,6 +26,7 @@
 			                   <th class="sorting" tabindex="0">名称</th>
 							   <th class="sorting" tabindex="0">价格</th>
 							  <!-- <th class="sorting" tabindex="0">市场价</th>-->
+							   <th class="sorting" tabindex="0">展示图</th>
 			                   <th class="sorting" tabindex="0">创建时间</th>
 			                   <th class="sorting" tabindex="0">最后修改时间</th>
 			                   <th class="sorting" tabindex="0">状态</th>
@@ -39,6 +40,7 @@
 							 <td>{$vo.tc_name}</td>
 							 <td>{$vo.price}&nbsp;元</td>
 							 <!--<td>{$vo.marketGoodsTotalPrice}</td>-->
+		                     <td><img src="{$vo.tc_image}" height="33px" style="cursor: pointer;" onclick="showImg(this.src);"> </td>
 		                     <td>{$vo.tc_time|date='Y-m-d H:i',###}</td>
 		                     <td>{$vo.last_time|date='Y-m-d H:i',###}</td>
 		                     <td>
@@ -101,6 +103,19 @@ function checkMonth(obj) {
         }
     });
 }
+//展示图片
+	function showImg(v) {
+        layer.open({
+            type: 3,
+            title: false,
+            closeBtn: 0,
+            area: '640px',
+            skin: 'layui-layer-nobg', //没有背景色
+            shadeClose: true,
+            content: '<img src="'+v+'">'
+        });
+    }
 </script>
+
 </body>
 </html>

@@ -1,4 +1,4 @@
-<?php if (!defined('THINK_PATH')) exit(); /*a:3:{s:40:"./application/admin/view3/tc\TcList.html";i:1511229236;s:48:"./application/admin/view3/public\min-header.html";i:1510814014;s:48:"./application/admin/view3/public\breadcrumb.html";i:1509608949;}*/ ?>
+<?php if (!defined('THINK_PATH')) exit(); /*a:3:{s:40:"./application/admin/view3/tc\TcList.html";i:1511931108;s:48:"./application/admin/view3/public\min-header.html";i:1510814014;s:48:"./application/admin/view3/public\breadcrumb.html";i:1509608949;}*/ ?>
 <!DOCTYPE html>
 <html>
   <head>
@@ -140,6 +140,7 @@
 			                   <th class="sorting" tabindex="0">名称</th>
 							   <th class="sorting" tabindex="0">价格</th>
 							  <!-- <th class="sorting" tabindex="0">市场价</th>-->
+							   <th class="sorting" tabindex="0">展示图</th>
 			                   <th class="sorting" tabindex="0">创建时间</th>
 			                   <th class="sorting" tabindex="0">最后修改时间</th>
 			                   <th class="sorting" tabindex="0">状态</th>
@@ -153,6 +154,7 @@
 							 <td><?php echo $vo['tc_name']; ?></td>
 							 <td><?php echo $vo['price']; ?>&nbsp;元</td>
 							 <!--<td><?php echo $vo['marketGoodsTotalPrice']; ?></td>-->
+		                     <td><img src="<?php echo $vo['tc_image']; ?>" height="33px" style="cursor: pointer;" onclick="showImg(this.src);"> </td>
 		                     <td><?php echo date('Y-m-d H:i',$vo['tc_time']); ?></td>
 		                     <td><?php echo date('Y-m-d H:i',$vo['last_time']); ?></td>
 		                     <td>
@@ -215,6 +217,19 @@ function checkMonth(obj) {
         }
     });
 }
+//展示图片
+	function showImg(v) {
+        layer.open({
+            type: 3,
+            title: false,
+            closeBtn: 0,
+            area: '640px',
+            skin: 'layui-layer-nobg', //没有背景色
+            shadeClose: true,
+            content: '<img src="'+v+'">'
+        });
+    }
 </script>
+
 </body>
 </html>

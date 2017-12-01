@@ -265,7 +265,7 @@ class OrderLogic
 
 		// 0插入订单 order
 		$address = M('UserAddress')->where("address_id", $address_id)->find();
-		$shipping = M('Plugin')->where("code", $shipping_code)->cache(true,TPSHOP_CACHE_TIME)->find();
+		$shipping = M('Plugin')->where("code", $shipping_code)->cache(true,DZLJ_CACHE_TIME)->find();
 		$order_sn = $this->get_order_sn();
 		$data = array(
 				'order_sn'         => $order_sn, // 订单编号

@@ -40,6 +40,7 @@ define('APP_DEBUG',true); //debug tp5 里面已经改为 config.php 里面
 define('PLUGIN_PATH', __DIR__ . '/plugins/');
 define('UPLOAD_PATH','public/upload/'); // 编辑器图片上传路径
 define('TPSHOP_CACHE_TIME',86400); // TPshop 缓存时间  31104000
+define('DZLJ_CACHE_TIME',86400); // DZLJ 缓存时间  31104000
 $http = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] && $_SERVER['HTTPS'] != 'off') ? 'https' : 'http';
 define('SITE_URL',$http.'://'.$_SERVER['HTTP_HOST']); // 网站域名
 //define('HTML_PATH','./Application/Runtime/Html/'); //静态缓存文件目录，HTML_PATH可任意设置，此处设为当前项目下新建的html目录

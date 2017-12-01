@@ -50,9 +50,10 @@ class Tc extends MobileBase{
     {
         $tc_id = I('tc_id/d');
         $user_id = cookie('user_id');
-        if (!is_numeric($user_id) || $user_id <= 0) return array('status' => -1, 'msg' => '必须登录后才能收藏', 'result' => array());
+        if (!is_numeric($user_id) || $user_id <= 0) return json_encode(array('status' => -1, 'msg' => '必须登录后才能收藏', 'result' => array()));
         $count = M('TcCollect')->where("user_id",$user_id)->where("tc_id", $tc_id)->count();
-        if ($count > 0) return array('status' => -3, 'msg' => '已收藏', 'result' => array());
+        if ($count > 0)
+            return json_encode(array('status' => -3, 'msg' => '已收藏', 'result' => array()));
         M('TcCollect')->add(array('tc_id' => $tc_id, 'user_id' => $user_id, 'add_time' => time()));
         $result = array('status' => 1, 'msg' => '收藏成功!', 'result' => array());
         exit(json_encode($result));

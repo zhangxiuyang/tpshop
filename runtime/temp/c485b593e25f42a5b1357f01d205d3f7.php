@@ -1,4 +1,4 @@
-<?php if (!defined('THINK_PATH')) exit(); /*a:3:{s:37:"./template/mobile/new2/tc\tcInfo.html";i:1511422214;s:41:"./template/mobile/new2/public\header.html";i:1503927242;s:43:"./template/mobile/new2/public\wx_share.html";i:1503927242;}*/ ?>
+<?php if (!defined('THINK_PATH')) exit(); /*a:3:{s:37:"./template/mobile/new2/tc\tcInfo.html";i:1512104529;s:41:"./template/mobile/new2/public\header.html";i:1503927242;s:43:"./template/mobile/new2/public\wx_share.html";i:1503927242;}*/ ?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -89,10 +89,10 @@
         <div class="fr" style="width:100%; max-width: 16rem;float: none; margin: auto;">
             <ul>
                 <li class="o">
-                    <a class="pb_plusshopcar button active_button" href="collect_tc;"> 收藏</a>
+                    <a href="javascript:collect_tc(<?php echo $v['tc_id']; ?>);"> 收藏</a>
                 </li>
                 <li class="r">
-                    <a class="choise_num" style="display:block;" href="javascript:void(0);">立即购买</a>
+                    <a class="choise_num" style="display:block;" href="<?php echo U('TcBuy/buy1',array('tc_id'=>$v['tc_id'])); ?>">立即购买</a>
                 </li>
             </ul>
         </div>

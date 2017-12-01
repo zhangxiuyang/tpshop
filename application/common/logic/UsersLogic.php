@@ -278,8 +278,10 @@ class UsersLogic extends Model
 
         $activityLogic = new \app\common\logic\ActivityLogic;             //获取能使用优惠券个数
         $user['coupon_count'] = $activityLogic->getUserCouponNum($user_id, 0);
-        
-        $user['collect_count'] = $this->getGoodsCollectNum($user_id);; //获取收藏数量
+
+        //收藏商品 替换为收藏套餐
+        //$user['collect_count'] = $this->getGoodsCollectNum($user_id);; //获取收藏数量
+        $user['collect_count'] = $this->getGoodsCollectTcNum($user_id);; //获取收藏数量
         $user['return_count'] = M('return_goods')->where("user_id=$user_id and status<2")->count();   //退换货数量
         
         $user['waitPay']     = M('order')->where("user_id = :user_id ".C('WAITPAY'))->bind(['user_id'=>$user_id])->count(); //待付款数量
@@ -456,16 +458,22 @@ class UsersLogic extends Model
         $return['show'] = $page->show();
         return $return;
     }
-
+//收藏商品
     public function getGoodsCollectNum($user_id)
     {
         $count = M('goods_collect')->alias('c')
-                ->join('goods g','g.goods_id = c.goods_id','INNER')
-                ->where('user_id', $user_id)
-                ->count();
+            ->join('goods g','g.goods_id = c.goods_id','INNER')
+            ->where('user_id', $user_id)
+            ->count();
         return $count;
     }
-    
+//收藏套餐
+    public function getGoodsCollectTcNum($user_id)
+    {
+        $count = M('tc_collect')->where('user_id', $user_id)->count();
+        return $count;
+    }
+
     /**
      * 获取商品收藏列表
      * @param $user_id  用户id
@@ -475,7 +483,7 @@ class UsersLogic extends Model
         $page = new Page($count,10);
         $show = $page->show();
         //获取我的收藏列表
-            $result = M('goods_collect')->alias('c')
+        $result = M('goods_collect')->alias('c')
             ->field('c.collect_id,c.add_time,g.goods_id,g.goods_name,g.shop_price,g.is_on_sale,g.store_count,g.cat_id ')
             ->join('goods g','g.goods_id = c.goods_id','INNER')
             ->where("c.user_id = $user_id")
@@ -484,7 +492,28 @@ class UsersLogic extends Model
         $return['status'] = 1;
         $return['msg'] = '获取成功';
         $return['result'] = $result;
-        $return['show'] = $show;        
+        $return['show'] = $show;
+        return $return;
+    }
+    /**
+     * 获取套餐收藏列表
+     * @param $user_id  用户id
+     */
+    public function get_tc_collect($user_id){
+        $count = $this->getGoodsCollectTcNum($user_id);
+        $page = new Page($count,10);
+        $show = $page->show();
+        //获取我的收藏列表
+        $result = M('tc_collect')->alias('c')
+            ->field('c.collect_id,c.add_time,t.tc_id,t.tc_name,t.price,t.tc_status,t.tc_image')
+            ->join('tc t','t.tc_id = c.tc_id','INNER')
+            ->where("c.user_id = $user_id")
+            ->limit($page->firstRow,$page->listRows)
+            ->select();
+        $return['status'] = 1;
+        $return['msg'] = '获取成功';
+        $return['result'] = $result;
+        $return['show'] = $show;
         return $return;
     }
 

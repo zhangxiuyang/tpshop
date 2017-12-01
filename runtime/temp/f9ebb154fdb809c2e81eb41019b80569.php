@@ -1,4 +1,4 @@
-<?php if (!defined('THINK_PATH')) exit(); /*a:5:{s:45:"./template/mobile/new2/user\collect_list.html";i:1503927244;s:41:"./template/mobile/new2/public\header.html";i:1503927242;s:45:"./template/mobile/new2/public\header_nav.html";i:1511227268;s:45:"./template/mobile/new2/public\footer_nav.html";i:1511419758;s:43:"./template/mobile/new2/public\wx_share.html";i:1503927242;}*/ ?>
+<?php if (!defined('THINK_PATH')) exit(); /*a:5:{s:45:"./template/mobile/new2/user\collect_list.html";i:1511510852;s:41:"./template/mobile/new2/public\header.html";i:1503927242;s:45:"./template/mobile/new2/public\header_nav.html";i:1511227268;s:45:"./template/mobile/new2/public\footer_nav.html";i:1511503571;s:43:"./template/mobile/new2/public\wx_share.html";i:1503927242;}*/ ?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -69,29 +69,30 @@
     </div>
 </div>
 
-<?php if(empty($goods_list)): ?>
+<?php if(empty($tc_list)): ?>
     <!--没有收藏-s-->
     <div class="comment_con p">
         <div class="none"><img src="__STATIC__/images/none.png"><br><br>亲，此处还没有收藏哦~</div>
     </div>
     <!--没有收藏-e-->
 <?php else: ?>
-    <div class="floor guesslike">
+    <div class="floor tcCollect">
         <div class="likeshop">
-            <ul id="goods_list">
-                <?php if(is_array($goods_list) || $goods_list instanceof \think\Collection || $goods_list instanceof \think\Paginator): if( count($goods_list)==0 ) : echo "" ;else: foreach($goods_list as $key=>$good): ?>
+            <ul id="tc_list">
+                <?php if(is_array($tc_list) || $tc_list instanceof \think\Collection || $tc_list instanceof \think\Paginator): if( count($tc_list)==0 ) : echo "" ;else: foreach($tc_list as $key=>$tc): ?>
                     <li>
                         <div class="similer-product">
                             <a class="simidibl" href="<?php echo U('Goods/goodsInfo',array('id'=>$good[goods_id])); ?>">
-                                <img src="<?php echo goods_thum_images($good['goods_id'],400,400); ?>"/>
-                                <span class="similar-product-text"><?php echo getSubstr($good[goods_name],0,20); ?></span>
+                                <img src="<?php echo $tc['tc_image']; ?>" width="100%"/>
                             </a>
-                                <span class="similar-product-price">
-                                    ¥
-                                    <span class="big-price"><?php echo $good[shop_price]; ?></span>
-                                    <a href="<?php echo U('Goods/goodsList',['id'=>$good['cat_id']]); ?>"><span class="guess-button dele-button J_ping">看相似</span></a>
-                                    <a href="<?php echo U('Mobile/User/cancel_collect', ['collect_id'=>$good[collect_id]]); ?>"><span class="guess-button  J_ping">删除</span></a>
+                            <div class="collect_tc_info">
+                                <span class="tc_name"><?php echo getSubstr($tc[tc_name],0,20); ?></span>
+                                <span class="priceAndDel">
+                                    ¥<span class="price"><?php echo $tc[price]; ?></span>
+                                    <a href="<?php echo U('Mobile/User/cancel_collect', ['collect_id'=>$tc[collect_id]]); ?>"><span class="btn">删除</span></a>
                                 </span>
+                            </div>
+
                         </div>
                     </li>
                 <?php endforeach; endif; else: echo "" ;endif; ?>
@@ -111,16 +112,16 @@ width: 50%;
     <div class="footer">
         <ul>
             <li>
-                <a <?php if(CONTROLLER_NAME == 'Tc'): ?>class="yello" <?php else: ?>href="<?php echo U('Index/index'); ?>"<?php endif; ?>  >
+                <a <?php if(CONTROLLER_NAME == 'Tc'): ?>class="yello" <?php else: ?>onclick="layer.open({type: 2});" href="<?php echo U('Index/index'); ?>"<?php endif; ?>  >
                     <div class="icon">
                         <i class="icon-shouye iconfont"></i>
-                        <p>首页</p>
+                        <p>套餐</p>
                     </div>
                 </a>
             </li>
 
             <li>
-                <a <?php if(CONTROLLER_NAME == 'User'): ?>class="yello" <?php else: ?>href="<?php echo U('User/index'); ?>"<?php endif; ?> >
+                <a <?php if(CONTROLLER_NAME == 'User'): ?>class="yello" <?php else: ?>onclick="layer.open({type: 2});" href="<?php echo U('User/index'); ?>"<?php endif; ?> >
                     <div class="icon">
                         <i class="icon-wode iconfont"></i>
                         <p>我的</p>
@@ -274,6 +275,23 @@ $(function(){
 <!--微信关注提醒  end-->
 <!-- 微信浏览器 调用微信 分享js  end-->
 <!--底部导航-end-->
+<style>
+    .tcCollect ul li{border-bottom: solid 1px #999;}
+    .tcCollect ul li .collect_tc_info{
+        position: relative;bottom: 0;margin-top: -3.1rem; font-size: .8rem;
+        padding: 0.5rem;
+    }
+    .tcCollect ul li .collect_tc_info .tc_name{
+        display: block; width: 100%; overflow: hidden;margin-bottom: 0.5rem;
+    }
+    .tcCollect ul li .collect_tc_info .priceAndDel{
+        display: block;color: red;
+    }
+    .tcCollect ul li .collect_tc_info .priceAndDel .btn{float: right; border:1px solid #999; background-color: #eee; color: #0a2b1d; font-size: 0.7rem; padding: 0.2rem 0.3rem;margin-top: -.2rem;
+        -webkit-border-radius:10px;
+        -moz-border-radius:10px;
+        border-radius:10px;}
+</style>
 <script type="text/javascript" src="__STATIC__/js/sourch_submit.js"></script>
 <script  type="text/javascript" charset="utf-8">
     /**
@@ -290,7 +308,7 @@ $(function(){
             {
                 if($.trim(data) != '')
                 {
-                    $("#goods_list").append(data);
+                    $("#tc_list").append(data);
                 }
             }
         });

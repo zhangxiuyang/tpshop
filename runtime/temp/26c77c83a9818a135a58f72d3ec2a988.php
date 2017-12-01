@@ -1,4 +1,4 @@
-<?php if (!defined('THINK_PATH')) exit(); /*a:3:{s:44:"./template/mobile/new2/user\add_address.html";i:1503927244;s:41:"./template/mobile/new2/public\header.html";i:1503927242;s:45:"./template/mobile/new2/public\header_nav.html";i:1511227268;}*/ ?>
+<?php if (!defined('THINK_PATH')) exit(); /*a:3:{s:44:"./template/mobile/new2/user\add_address.html";i:1512108229;s:41:"./template/mobile/new2/public\header.html";i:1503927242;s:45:"./template/mobile/new2/public\header_nav.html";i:1511227268;}*/ ?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -160,6 +160,8 @@
                     <input type="hidden" name="order_id" value="<?php echo \think\Request::instance()->param('order_id'); ?>" />
                     <input type="hidden" name="act_id" value="<?php echo \think\Request::instance()->param('act_id'); ?>" />
                     <input type="hidden" name="goods_num" value="<?php echo \think\Request::instance()->param('goods_num'); ?>" />
+
+                    <input type="hidden" name="tc_id" value="<?php echo \think\Request::instance()->param('tc_id'); ?>" />
                     <?php else: ?>
                     <input type="button" value="保存该地址" class="dotm_btn1 beett" onclick="checkForm()" />
                 <?php endif; ?>

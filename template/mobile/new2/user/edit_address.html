@@ -23,9 +23,11 @@
         <div class="ds-in-bl search center">
             <span>编辑收货地址</span>
         </div>
-        <div class="ds-in-bl menu">
-            <a href="javascript:btn_del();"><img src="__STATIC__/images/dele.png" alt="删除"></a>
-        </div>
+        <if condition="$Request.param.source neq 'buy1'">
+            <div class="ds-in-bl menu">
+                <a href="javascript:btn_del();"><img src="__STATIC__/images/dele.png" alt="删除"></a>
+            </div>
+        </if>
     </div>
 </div>
 <div class="floor my p edit">
@@ -126,7 +128,11 @@
         <if condition="$Request.param.source eq 'cart2'"> <!--如果是下订单时提交过了的页面-->
             <input type="button" value="保存并使用该地址" class="dotm_btn1 beett" onclick="checkForm()" />
             <input type="hidden" name="source" value="{$Request.param.source}" />
-        <else/>
+        <elseif condition="$Request.param.source eq 'buy1'">
+            <input type="button" value="保存并使用该地址" class="dotm_btn1 beett" onclick="checkForm()" />
+            <input type="hidden" name="source" value="{$Request.param.source}" />
+            <input type="hidden" name="tc_id" value="{$Request.param.tc_id}" />
+        <else>
             <input type="button" value="保存该地址" class="dotm_btn1 beett" onclick="checkForm()" />
         </if>
     </div>

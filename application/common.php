@@ -26,7 +26,7 @@ function is_login(){
 }
 /**
  * 获取用户信息
- * @param $user_id_or_name  用户id 邮箱 手机 第三方id
+ * @param $user_id_or_name                                                                            用户id 邮箱 手机 第三方id
  * @param int $type  类型 0 user_id查找 1 邮箱查找 2 手机查找 3 第三方唯一标识查找
  * @param string $oauth  第三方来源
  * @return mixed

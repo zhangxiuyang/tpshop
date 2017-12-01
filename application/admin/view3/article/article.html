@@ -187,7 +187,8 @@
 			alert("请选择文章类别！");
 			return false;
 		}
-		if($('#post_content').val() == ''){
+
+		if($("input[name='content']").val() == ''){
 			alert("请填写文章内容！");
 			return false;
 		}

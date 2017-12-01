@@ -431,8 +431,8 @@ class User extends MobileBase
     public function add_address()
     {
         if (IS_POST) {
-            $source = input('cart2');
-            $post_data = input('post');
+            $source = input('source');
+            $post_data = input('post.');
             $logic = new UsersLogic();
             $data = $logic->add_address($this->user_id, 0, I('post.'));
             if ($data['status'] != 1)
@@ -442,6 +442,9 @@ class User extends MobileBase
                 exit;
             }elseif($source == 'pre_sell'){
                 header('Location:' . U('/Mobile/Cart/pre_sell', array('address_id' => $data['result'],'act_id'=>$post_data['act_id'],'goods_num'=>$post_data['goods_num'])));
+                exit;
+            }elseif($source == 'buy1'){
+                header('Location:' . U('/Mobile/TcBuy/buy1', array('tc_id'=>$post_data['tc_id'],'address_id' => $data['result'])));
                 exit;
             }
 
@@ -468,9 +471,12 @@ class User extends MobileBase
             if ($_POST['source'] == 'cart2') {
                 header('Location:' . U('/Mobile/Cart/cart2', array('address_id' => $id)));
                 exit;
-            } else
+            } elseif ($_POST['source'] == 'buy1') {
+                header('Location:' . U('/Mobile/TcBuy/buy1', array('tc_id'=>I('tc_id'),'address_id' => $id)));
+                exit;
+            }else
                 $this->success($data['msg'], U('/Mobile/User/address_list'));
-            exit();
+                exit($_POST['source']);
         }
         //获取省份
         $p = M('region')->where(array('parent_id' => 0, 'level' => 1))->select();
@@ -772,9 +778,9 @@ class User extends MobileBase
     public function collect_list()
     {
         $userLogic = new UsersLogic();
-        $data = $userLogic->get_goods_collect($this->user_id);
+        $data = $userLogic->get_tc_collect($this->user_id);
         $this->assign('page', $data['show']);// 赋值分页输出
-        $this->assign('goods_list', $data['result']);
+        $this->assign('tc_list', $data['result']);
         if (IS_AJAX) {      //ajax加载更多
             return $this->fetch('ajax_collect_list');
             exit;

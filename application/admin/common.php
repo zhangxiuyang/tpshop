@@ -239,6 +239,11 @@ function getAllMenu(){
             array('name' => '添加订单', 'act'=>'add_order', 'control'=>'Order'),
             array('name' => '订单日志', 'act'=>'order_log', 'control'=>'Order'),
         )),
+        'tools' => array('name' => '插件工具', 'icon'=>'fa-plug', 'sub_menu' => array(
+            array('name' => '插件列表', 'act'=>'index', 'control'=>'Plugin'),
+            array('name' => '数据备份', 'act'=>'index', 'control'=>'Tools'),
+            array('name' => '数据还原', 'act'=>'restore', 'control'=>'Tools'),
+        )),
 
         'Ad' => array('name' => '广告管理', 'icon'=>'fa-flag', 'sub_menu' => array(
             array('name' => '广告列表', 'act'=>'adList', 'control'=>'Ad'),

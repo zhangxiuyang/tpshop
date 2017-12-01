@@ -1,4 +1,4 @@
-<?php if (!defined('THINK_PATH')) exit(); /*a:5:{s:36:"./template/mobile/new2/tc\index.html";i:1511419468;s:41:"./template/mobile/new2/public\header.html";i:1503927242;s:46:"./template/mobile/new2/public\header_nav2.html";i:1511419418;s:45:"./template/mobile/new2/public\footer_nav.html";i:1511419758;s:43:"./template/mobile/new2/public\wx_share.html";i:1503927242;}*/ ?>
+<?php if (!defined('THINK_PATH')) exit(); /*a:5:{s:36:"./template/mobile/new2/tc\index.html";i:1512021896;s:41:"./template/mobile/new2/public\header.html";i:1503927242;s:46:"./template/mobile/new2/public\header_nav2.html";i:1511419418;s:45:"./template/mobile/new2/public\footer_nav.html";i:1511503571;s:43:"./template/mobile/new2/public\wx_share.html";i:1503927242;}*/ ?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -25,20 +25,19 @@
     </div>
 </div>
 <style>
-    #goods_list{    /*background: url(http://img4.imgtn.bdimg.com/it/u=1931659373,3162792411&fm=27&gp=0.jpg) repeat;*/}
-    .cbaudience{height: 360px; background-color: #1e695e; text-align: center;  line-height: 360px;}
+    #goods_list{    /*background: url(http://img4.imgtn.bdimg.com/it/u=1931659373,3162792411&fm=27&gp=0.jpg) repeat;*/
+    margin-bottom: -0.8rem;}
+    #goods_list a img{margin-bottom: .6rem;}
+    .cbaudience{height: 360px; background-color: #1e695e; text-align: center;  line-height: 360px; margin-bottom: .5rem;}
     .cbaudience p{font-size: .8rem; color: #ffffff;letter-spacing: .2rem; text-align: left;line-height: 260px; padding-left: 140px;font-family:"楷体";}
+    .img_tc_list{width: 100%;}
 </style>
     <!--套餐列表-s-->
         <div id="goods_list">
             <?php if(is_array($tc_list) || $tc_list instanceof \think\Collection || $tc_list instanceof \think\Paginator): if( count($tc_list)==0 ) : echo "" ;else: foreach($tc_list as $key=>$list): ?>
-                <a href="<?php echo U('Tc/tcInfo',array('id'=>$list[tc_id])); ?>">
-                    <div class="cbaudience">
-                            <p><?php echo $list[tc_name]; ?></p>
-                    </div>
+                <a onclick="layer.open({type: 2,shadeClose: false,time:3});" href="<?php echo U('Tc/tcInfo',array('id'=>$list[tc_id])); ?>"  >
+                        <img class="img_tc_list" src="<?php echo $list[tc_image]; ?>" />
                 </a>
-                <br>
-                <br>
             <?php endforeach; endif; else: echo "" ;endif; ?>
         </div>
     <!--套餐列表-e-->
@@ -54,16 +53,16 @@ width: 50%;
     <div class="footer">
         <ul>
             <li>
-                <a <?php if(CONTROLLER_NAME == 'Tc'): ?>class="yello" <?php else: ?>href="<?php echo U('Index/index'); ?>"<?php endif; ?>  >
+                <a <?php if(CONTROLLER_NAME == 'Tc'): ?>class="yello" <?php else: ?>onclick="layer.open({type: 2});" href="<?php echo U('Index/index'); ?>"<?php endif; ?>  >
                     <div class="icon">
                         <i class="icon-shouye iconfont"></i>
-                        <p>首页</p>
+                        <p>套餐</p>
                     </div>
                 </a>
             </li>
 
             <li>
-                <a <?php if(CONTROLLER_NAME == 'User'): ?>class="yello" <?php else: ?>href="<?php echo U('User/index'); ?>"<?php endif; ?> >
+                <a <?php if(CONTROLLER_NAME == 'User'): ?>class="yello" <?php else: ?>onclick="layer.open({type: 2});" href="<?php echo U('User/index'); ?>"<?php endif; ?> >
                     <div class="icon">
                         <i class="icon-wode iconfont"></i>
                         <p>我的</p>
@@ -240,7 +239,7 @@ $(function(){
         });*/
     }
     //滚动加载更多
-    $(window).scroll(
+/*    $(window).scroll(
         function() {
             var scrollTop = $(this).scrollTop();
             var scrollHeight = $(document).height();
@@ -249,6 +248,10 @@ $(function(){
                // ajax_sourch_submit();//调用加载更多
             }
         }
-    );
+    );*/
+    /*function showLoad() {
+        layer.open({type: 2});
+    }*/
+    layer.closeAll();
 </script>
 </html>

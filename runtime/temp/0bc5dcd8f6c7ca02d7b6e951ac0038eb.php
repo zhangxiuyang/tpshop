@@ -1,4 +1,4 @@
-<?php if (!defined('THINK_PATH')) exit(); /*a:2:{s:38:"./template/mobile/new2/user\login.html";i:1511417417;s:41:"./template/mobile/new2/public\header.html";i:1503927242;}*/ ?>
+<?php if (!defined('THINK_PATH')) exit(); /*a:2:{s:38:"./template/mobile/new2/user\login.html";i:1511748246;s:41:"./template/mobile/new2/public\header.html";i:1503927242;}*/ ?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -17,7 +17,7 @@
 <body class="">
 
 <style>
-    body{padding-top: 40%;
+    body{padding-top: 30%;
         background: url(__STATIC__/images/bg.jpg) no-repeat;
         background-size: contain;}
     .bgWhite{background-color: white;}
@@ -44,9 +44,10 @@
         color:    #7f7f7f;
     }
     .thirdlogin{padding-top: .8rem; margin-top: 0.5rem;}
+    .thirdlogin ul { margin-top: 0.5rem; }
 </style>
 <div style="position: absolute;
-    top: 1rem;
+    top: .5rem;
     width: 60%;
     padding: 1rem;
     font-size: 0.6rem;
@@ -194,12 +195,14 @@
         if (codeExist) {
             data.verify_code = verify_code;
         }
+        layer.open({type: 2,time:3})
         $.ajax({
             type : 'post',
             url : '/index.php?m=Mobile&c=User&a=do_login&t='+Math.random(),
             data : data,
             dataType : 'json',
             success : function(data){
+                //layer.closeAll();
                 if(data.status == 1){
                     var url = data.url.toLowerCase();
                     if (url.indexOf('user') !=  false && url.indexOf('login') != false || url == '') {
@@ -219,7 +222,7 @@
             error : function(XMLHttpRequest, textStatus, errorThrown) {
                 showErrorMsg('网络异常，请稍后重试');
             }
-        })
+        });
     }
         //切换密码框的状态
         $(function(){

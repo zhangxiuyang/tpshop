@@ -1,15 +1,17 @@
-<foreach name="goods_list" item="good">
+<foreach name="tc_list" item="tc">
     <li>
         <div class="similer-product">
             <a class="simidibl" href="{:U('Goods/goodsInfo',array('id'=>$good[goods_id]))}">
-                <img src="{$good.goods_id|goods_thum_images=400,400}"/>
-                <span class="similar-product-text">{$good[goods_name]|getSubstr=0,20}</span>
+                <img src="{$tc.tc_image}" width="100%"/>
             </a>
-            <span class="similar-product-price">
-                ¥<span class="big-price">{$good[shop_price]}</span>
-                <a href="{:U('Goods/goodsList',['id'=>$good.cat_id])}"><span class="guess-button dele-button J_ping">看相似</span></a>
-                <a href="{:U('Mobile/User/cancel_collect', ['collect_id'=>$good[collect_id]])}"><span class="guess-button dele-button J_ping">删除</span></a>
-            </span>
+            <div class="collect_tc_info">
+                <span class="tc_name">{$tc[tc_name]|getSubstr=0,20}</span>
+                <span class="priceAndDel">
+                                    ¥<span class="price">{$tc[price]}</span>
+                                    <a href="{:U('Mobile/User/cancel_collect', ['collect_id'=>$tc[collect_id]])}"><span class="btn">删除</span></a>
+                                </span>
+            </div>
+
         </div>
     </li>
 </foreach>
